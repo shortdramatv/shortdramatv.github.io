@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google Site Verification -->
+    <meta name="google-site-verification" content="2aLXWXxR4swyZqs_5IfoNyqTdIX5C7wwk_ed8AV03ss" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>12 Testers - Testers Community | Accelerate Your Closed Testing</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="https://raw.githubusercontent.com/nadeemgamingstudio/testerscommunity/refs/heads/main/icon.png" type="image/x-icon"/>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom Tailwind Configuration for Gaming Theme -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-bg': '#0A0A0A',
+                        'secondary-bg': '#1a1a1a',
+                        'accent-pink': '#FF0066',
+                        'accent-yellow': '#FBD534',
+                        'accent-blue': '#00D4FF',
+                        'accent-purple': '#9D4EDD',
+                        'accent-red': '#FF0000',
+                        'accent-green': '#2ECC71',
+                        'text-light': '#e5e5e5',
+                        'border-dark': '#333333',
+                        'indigo-custom': '#4F46E5',
+                        'purple-custom': '#7C3AED',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        'orbitron': ['Orbitron', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'neon-pink': '0 0 15px rgba(255, 0, 102, 0.8)',
+                        'neon-yellow': '0 0 15px rgba(251, 213, 52, 0.8)',
+                        'neon-blue': '0 0 15px rgba(0, 212, 255, 0.8)',
+                        'neon-red': '0 0 15px rgba(255, 0, 0, 0.8)',
+                        'neon-green': '0 0 15px rgba(46, 204, 113, 0.8)',
+                        'neon-indigo': '0 0 15px rgba(79, 70, 229, 0.8)',
+                        'neon-purple': '0 0 15px rgba(124, 58, 237, 0.8)',
+                        'glow': '0 0 30px rgba(255, 0, 102, 0.5)',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                        'slide': 'slide 20s linear infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'ping-slow': 'ping 4s cubic-bezier(0, 0, 0.2, 1) infinite',
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'gradient-testers': 'linear-gradient(135deg, #4F46E5 0%, #7C3AED 50%, #EC4899 100%)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <style>
+        /* Import Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Orbitron:wght@400;700;900&display=swap');
+        
+        /* Global Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+            overflow-x: hidden;
+            color: #e5e5e5;
+        }
+        
+        /* Animated Top Bar */
+        .top-animated-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, 
+                #4F46E5, #7C3AED, #EC4899, #FBD534,
+                #2ECC71, #00D4FF, #FF0066, #4F46E5);
+            background-size: 800% 100%;
+            animation: colorSlide 10s linear infinite;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        /* Animated Side Bars */
+        .side-animated-bar {
+            position: fixed;
+            top: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(180deg, 
+                #4F46E5, #7C3AED, #EC4899, #FBD534,
+                #2ECC71, #00D4FF, #FF0066, #4F46E5);
+            background-size: 100% 800%;
+            animation: colorSlideVertical 15s linear infinite;
+            z-index: 99;
+        }
+        
+        .left-bar {
+            left: 0;
+        }
+        
+        .right-bar {
+            right: 0;
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+            background: #111;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #4F46E5, #7C3AED);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #7C3AED, #4F46E5);
+        }
+        
+        /* Animations */
+        @keyframes colorSlide {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 800% 0%;
+            }
+        }
+        
+        @keyframes colorSlideVertical {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 0% 800%;
+            }
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        @keyframes gradient {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+        
+        @keyframes slide {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+        
+        /* Particle Background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* Glowing Text Effect */
+        .glow-text {
+            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+        }
+        
+        /* Scroll to Top Button */
+        .scroll-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #4F46E5, #7C3AED);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 99;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 0 20px rgba(79, 70, 229, 0.7);
+        }
+        
+        .scroll-top-btn.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-top-btn:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 0 30px rgba(79, 70, 229, 0.9);
+        }
+        
+        /* Typewriter Effect */
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid #4F46E5;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #4F46E5; }
+        }
+        
+        /* Card Hover Effects */
+        .card-hover {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Testimonial Card */
+        .testimonial-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .testimonial-card:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Feature Icon Animation */
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-icon:hover {
+            transform: rotate(15deg) scale(1.2);
+        }
+        
+        /* Gradient Background */
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.1) 50%, rgba(236, 72, 153, 0.1) 100%);
+        }
+        
+        /* Animated Border */
+        .animated-border {
+            position: relative;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+        
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #4F46E5, #7C3AED, #EC4899, #FBD534);
+            z-index: -1;
+            border-radius: inherit;
+            animation: gradient 4s linear infinite;
+            background-size: 400% 400%;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .side-animated-bar {
+                display: none;
+            }
+            .scroll-top-btn {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-primary-bg text-text-light min-h-screen antialiased">
+    
+    <!-- Animated Color Bars -->
+    <div class="top-animated-bar"></div>
+    <div class="side-animated-bar left-bar"></div>
+    <div class="side-animated-bar right-bar"></div>
+    
+    <!-- Particle Background -->
+    <div class="particles" id="particles-js"></div>
+    
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top-btn" id="scrollTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Header / Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-secondary-bg/90 backdrop-blur-md shadow-2xl shadow-black/70 border-b-2 border-indigo-custom">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <!-- Logo/Title -->
+            <div class="flex items-center space-x-3" data-aos="fade-right" data-aos-duration="1000">
+                <div class="relative">
+                    <a href="#">
+                        <img src="https://raw.githubusercontent.com/nadeemgamingstudio/testerscommunity/refs/heads/main/icon.png" 
+                             alt="12 Testers Logo" 
+                             class="h-10 w-10 rounded-xl border-2 border-accent-yellow p-0.5 animate-spin-slow"
+                             onerror="this.src='https://placehold.co/40x40/1a1a1a/4F46E5?text=12T'">
+                    </a>
+                    <div class="absolute -top-1 -right-1 h-4 w-4 bg-accent-pink rounded-full animate-pulse"></div>
+                </div>
+                <div>
+                    <span class="text-2xl font-black tracking-wider text-white font-orbitron bg-gradient-to-r from-indigo-custom to-purple-custom bg-clip-text text-transparent">
+                        12 <span class="text-accent-yellow">TESTERS</span>
+                    </span>
+                    <div class="text-xs text-accent-blue font-bold tracking-widest uppercase mt-0.5">
+                        <i class="fas fa-users mr-1"></i> TESTERS COMMUNITY
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation Links -->
+            <div class="space-x-4 flex items-center" data-aos="fade-left" data-aos-duration="1000">
+                <a href="https://nadeemgamingstudio.github.io/" 
+                   class="relative group px-5 py-2.5 rounded-xl font-bold transition-all duration-300 overflow-hidden">
+                    <span class="relative z-10 text-white flex items-center">
+                        <i class="fas fa-home mr-2"></i> HOME
+                    </span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-indigo-custom to-purple-custom opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute inset-0 border-2 border-indigo-custom rounded-xl"></div>
+                </a>
+                
+                <a href="#token-system" 
+                   class="relative group px-5 py-2.5 rounded-xl font-bold transition-all duration-300 overflow-hidden">
+                    <span class="relative z-10 text-white flex items-center">
+                        <i class="fas fa-coins mr-2"></i> TOKEN SYSTEM
+                    </span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-accent-blue to-accent-purple opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute inset-0 border-2 border-accent-blue rounded-xl"></div>
+                </a>
+                
+                <a href="#how-it-works" 
+                   class="relative group px-5 py-2.5 rounded-xl font-bold transition-all duration-300 overflow-hidden">
+                    <span class="relative z-10 text-white flex items-center">
+                        <i class="fas fa-cogs mr-2"></i> TEST FLOW
+                    </span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-accent-green to-accent-blue opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute inset-0 border-2 border-accent-green rounded-xl"></div>
+                </a>
+                
+                <a href="https://nadeemgamingstudio.github.io/testerscommunity/privacypolicy" 
+                   target="_blank"
+                   class="relative group px-5 py-2.5 rounded-xl font-bold transition-all duration-300 overflow-hidden">
+                    <span class="relative z-10 text-white flex items-center">
+                        <i class="fas fa-shield-alt mr-2"></i> PRIVACY
+                    </span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-accent-pink to-accent-yellow opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div class="absolute inset-0 border-2 border-accent-pink rounded-xl"></div>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+
+    
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20">
+
+
+        
+    
+            
+            <div class="relative z-10 text-center grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="lg:text-left">
+                    <div class="inline-flex items-center mb-6 px-4 py-2 bg-indigo-custom/20 rounded-full border border-indigo-custom/30">
+                        <i class="fas fa-bolt text-accent-yellow mr-2"></i>
+                        <span class="text-sm font-bold text-accent-blue">REVOLUTIONARY TESTING PLATFORM</span>
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-6 leading-tight font-orbitron">
+                        <span class="bg-gradient-to-r from-indigo-custom via-purple-custom to-accent-pink bg-clip-text text-transparent animate-gradient">
+                            Guaranteed <span class="text-accent-yellow">Visibility &</span> Closed Testing Success
+                        </span>
+                    </h1>
+                    
+                    <div class="typewriter text-2xl md:text-3xl font-bold text-white mb-8 max-w-3xl">
+                        The Ultimate Platform for Android Developers & Testers!
+                    </div>
+                    
+                    <p class="text-xl text-gray-300 mb-8 max-w-xl leading-relaxed">
+                        The definitive platform for Android developers to fulfill Google Play's 20-tester closed track requirement and gain essential, verified feedback. Join thousands of developers and testers in our vibrant community.
+                    </p>
+                    
+                    <!-- Call to Action Button -->
+                    <div class="flex flex-col sm:flex-row gap-6 mb-8">
+                        <a href="https://play.google.com/store/apps/details?id=com.nadeemgs.testerscommunity" 
+                           target="_blank" 
+                           class="relative group px-10 py-4 text-lg font-bold rounded-xl text-white overflow-hidden animated-border transform hover:scale-105 transition-all duration-300">
+                            <span class="relative z-10 flex items-center justify-center">
+                                <i class="fas fa-download text-xl mr-3"></i>
+                                Download Now & Start Testing
+                            </span>
+                            <div class="absolute inset-0 bg-gradient-to-r from-indigo-custom to-purple-custom"></div>
+                        </a>
+                        
+                        <a href="#token-system"
+                           class="px-10 py-4 bg-gray-800 text-white font-bold rounded-xl border-2 border-gray-700 hover:border-accent-pink hover:shadow-neon-pink transition-all duration-300 flex items-center justify-center">
+                            <i class="fas fa-play-circle text-xl mr-3"></i>
+                            How It Works
+                        </a>
+                    </div>
+                    
+                    <p class="text-sm text-gray-400 flex items-center justify-center lg:justify-start">
+                        <i class="fas fa-lock text-accent-green mr-2"></i>
+                        Secure access via Google Sign-In and Custom Tokens.
+                    </p>
+                    
+                    <!-- Stats -->
+                    <div class="flex flex-wrap gap-8 mt-12">
+                        <div class="text-center p-4 bg-gray-800/50 rounded-2xl border border-gray-700">
+                            <div class="text-3xl font-bold text-accent-blue mb-2">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="text-sm text-gray-300">Active Community</div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-800/50 rounded-2xl border border-gray-700">
+                            <div class="text-3xl font-bold text-accent-green mb-2">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="text-sm text-gray-300">Guaranteed Testing</div>
+                        </div>
+                        <div class="text-center p-4 bg-gray-800/50 rounded-2xl border border-gray-700">
+                            <div class="text-3xl font-bold text-accent-yellow mb-2">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="text-sm text-gray-300">Token Rewards</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Screenshot -->
+                <div class="flex justify-center lg:justify-end">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-indigo-custom to-purple-custom rounded-3xl blur-xl opacity-30"></div>
+                        <img src="https://raw.githubusercontent.com/nadeemgamingstudio/testerscommunity/refs/heads/main/d1.png" 
+                             alt="Main App Interface Screenshot" 
+                             class="relative w-full max-w-sm md:max-w-md h-auto object-cover rounded-3xl shadow-2xl transform hover:scale-105 transition-transform duration-500">
+                        <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-accent-yellow/10 rounded-full blur-xl"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Dynamic Two-Tier Token System -->
+        <section id="token-system" class="py-16 md:py-20 gradient-bg rounded-3xl p-8 mb-16" data-aos="fade-up">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-black mb-6 font-orbitron">
+                        <span class="bg-gradient-to-r from-indigo-custom to-purple-custom bg-clip-text text-transparent">
+                            <i class="fas fa-layer-group mr-4"></i>Dynamic Two-Tier Upload & Reward System
+                        </span>
+                    </h2>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                        Developers choose their upload tier for guaranteed visibility. Testers are rewarded based on the effort and premium status of the app they test.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    
+                    <!-- Tier 1: Standard (100 Tokens) -->
+                    <div class="card-hover bg-gradient-to-br from-gray-900 to-black p-8 rounded-3xl shadow-2xl border-l-8 border-indigo-custom relative overflow-hidden">
+                        <div class="absolute top-4 right-4 bg-indigo-custom text-white px-4 py-1 rounded-full text-sm font-bold animate-pulse">
+                            POPULAR CHOICE
+                        </div>
+                        
+                        <h3 class="text-3xl font-bold text-indigo-custom mb-4 flex items-center">
+                            <i class="fas fa-star mr-3 feature-icon"></i>
+                            Standard Listing
+                        </h3>
+                        <p class="text-lg text-gray-300 mb-6 font-semibold">The Community-Driven Tier: Earn and Upload.</p>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-accent-green mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-bold text-white">Developer Cost:</span>
+                                    <span class="text-accent-yellow ml-2">100 Tokens</span>
+                                    <p class="text-gray-400 text-sm mt-1">to list the app for 24 hours</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-eye text-accent-blue mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-bold text-white">Visibility Logic:</span>
+                                    <p class="text-gray-300 mt-1">First-come, first-served. The app is visible on the home screen, but any new upload will push it down.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-gift text-accent-pink mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-bold text-white">Tester Reward:</span>
+                                    <span class="text-accent-green ml-2">20 Tokens</span>
+                                    <p class="text-gray-400 text-sm mt-1">per completed test (4 tests = Free 100-Token Upload)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-indigo-custom/10 rounded-xl border border-indigo-custom/30">
+                            <p class="text-gray-300 text-sm flex items-center">
+                                <i class="fas fa-lightbulb text-accent-yellow mr-2"></i>
+                                <strong>Perfect for:</strong> New developers and those testing the waters with their apps.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Tier 2: Premium (5000 Tokens) -->
+                    <div class="card-hover bg-gradient-to-br from-gray-900 to-black p-8 rounded-3xl shadow-2xl border-l-8 border-purple-custom relative overflow-hidden">
+                        <div class="absolute top-4 right-4 bg-purple-custom text-white px-4 py-1 rounded-full text-sm font-bold animate-pulse-slow">
+                            PREMIUM
+                        </div>
+                        
+                        <h3 class="text-3xl font-bold text-purple-custom mb-4 flex items-center">
+                            <i class="fas fa-crown mr-3 feature-icon"></i>
+                            Premium Listing
+                        </h3>
+                        <p class="text-lg text-gray-300 mb-6 font-semibold">Maximize Exposure: Stay at the Top for 24 Hours.</p>
+                        
+                        <div class="space-y-4 mb-8">
+                            <div class="flex items-start">
+                                <i class="fas fa-gem text-purple-custom mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-bold text-white">Developer Cost:</span>
+                                    <span class="text-accent-yellow ml-2">5000 Tokens</span>
+                                    <p class="text-gray-400 text-sm mt-1">to secure a top-ranked slot</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-trophy text-accent-yellow mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-bold text-white">Visibility Logic:</span>
+                                    <p class="text-gray-300 mt-1">Top Position Guaranteed for 24 hours. Your app remains above all Standard listings.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-award text-accent-green mr-3 mt-1"></i>
+                                <div>
+                                    <span class="font-bold text-white">Tester Reward:</span>
+                                    <span class="text-accent-green ml-2">30 Tokens</span>
+                                    <p class="text-gray-400 text-sm mt-1">per completed test, incentivizing rapid testing</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 bg-purple-custom/10 rounded-xl border border-purple-custom/30">
+                            <p class="text-gray-300 text-sm flex items-center">
+                                <i class="fas fa-rocket text-accent-pink mr-2"></i>
+                                <strong>Perfect for:</strong> Serious developers needing guaranteed visibility and quick tester acquisition.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 p-6 bg-gray-800/50 rounded-2xl border border-gray-700">
+                    <p class="text-gray-300 text-center flex items-center justify-center">
+                        <i class="fas fa-info-circle text-accent-blue mr-3 text-xl"></i>
+                        <span><strong>Note:</strong> All apps, regardless of tier, are automatically removed after the 24-hour cycle to maintain a fresh, manageable testing pool.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The 4-Step Testing Flow -->
+        <section id="how-it-works" class="py-16 md:py-20 mb-16" data-aos="fade-up">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-black mb-6 font-orbitron">
+                        <span class="bg-gradient-to-r from-accent-green to-accent-blue bg-clip-text text-transparent">
+                            <i class="fas fa-sitemap mr-4"></i>The Verified 4-Step Testing & Token Flow
+                        </span>
+                    </h2>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                        A seamless process that guarantees both developers get their required testers and testers get rewarded for their efforts.
+                    </p>
+                </div>
+                
+                <div class="relative">
+                    <!-- Animated Connection Line -->
+                    <div class="absolute left-10 md:left-1/2 md:-ml-px h-full w-1 bg-gradient-to-b from-indigo-custom via-purple-custom to-accent-green rounded-full animate-pulse"></div>
+
+                    <!-- Steps Grid -->
+                    <ul class="space-y-20">
+                        <!-- Step 1 -->
+                        <li class="relative flex items-start justify-between md:justify-start md:space-x-8">
+                            <div class="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-r from-indigo-custom to-purple-custom text-white flex items-center justify-center z-10 font-extrabold text-xl shadow-2xl ring-4 ring-primary-bg animate-bounce-slow">
+                                <i class="fas fa-play"></i>
+                            </div>
+                            <div class="min-w-0 flex-1 p-6 bg-gradient-to-br from-gray-900 to-black rounded-3xl shadow-2xl border border-gray-800 md:ml-6 ml-8 card-hover">
+                                <h3 class="text-2xl font-bold text-white mb-3 flex items-center">
+                                    <span class="bg-gradient-to-r from-indigo-custom to-purple-custom bg-clip-text text-transparent">Step 1:</span>
+                                    <span class="ml-3">Test Now → Open Play Store</span>
+                                </h3>
+                                <p class="text-gray-300 mb-4">The tester is redirected to the Google Play Store Close Testing link (External Link & Google Group Join) provided by the developer.</p>
+                                <div class="flex items-center text-accent-blue">
+                                    <i class="fas fa-external-link-alt mr-2"></i>
+                                    <span class="text-sm">Direct access to testing page</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Step 2 -->
+                        <li class="relative flex items-start justify-between md:justify-end md:space-x-8">
+                            <div class="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-r from-purple-custom to-accent-pink text-white flex items-center justify-center z-10 font-extrabold text-xl shadow-2xl ring-4 ring-primary-bg order-2 md:order-1 animate-bounce-slow">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="min-w-0 flex-1 p-6 bg-gradient-to-br from-gray-900 to-black rounded-3xl shadow-2xl border border-gray-800 md:text-right md:mr-6 mr-8 order-1 md:order-2 card-hover">
+                                <h3 class="text-2xl font-bold text-white mb-3 flex items-center md:justify-end">
+                                    <span class="bg-gradient-to-r from-purple-custom to-accent-pink bg-clip-text text-transparent">Step 2:</span>
+                                    <span class="ml-3">Open App (Launch Installed App)</span>
+                                </h3>
+                                <p class="text-gray-300 mb-4">Once installed, the button changes to "Open App," allowing the tester to launch the installed application and begin the testing session.</p>
+                                <div class="flex items-center text-accent-green md:justify-end">
+                                    <i class="fas fa-check-circle mr-2"></i>
+                                    <span class="text-sm">App installation verification</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Step 3 -->
+                        <li class="relative flex items-start justify-between md:justify-start md:space-x-8">
+                            <div class="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-r from-accent-pink to-accent-yellow text-white flex items-center justify-center z-10 font-extrabold text-xl shadow-2xl ring-4 ring-primary-bg animate-bounce-slow">
+                                <i class="fas fa-comment-alt"></i>
+                            </div>
+                            <div class="min-w-0 flex-1 p-6 bg-gradient-to-br from-gray-900 to-black rounded-3xl shadow-2xl border border-gray-800 md:ml-6 ml-8 card-hover">
+                                <h3 class="text-2xl font-bold text-white mb-3 flex items-center">
+                                    <span class="bg-gradient-to-r from-accent-pink to-accent-yellow bg-clip-text text-transparent">Step 3:</span>
+                                    <span class="ml-3">Give Feedback (Verified Review)</span>
+                                </h3>
+                                <p class="text-gray-300 mb-4">The tester submits their required review/feedback on the Play Store, fulfilling the core requirement for the developer.</p>
+                                <div class="flex items-center text-accent-yellow">
+                                    <i class="fas fa-star mr-2"></i>
+                                    <span class="text-sm">Quality feedback submission</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <!-- Step 4 -->
+                        <li class="relative flex items-start justify-between md:justify-end md:space-x-8">
+                            <div class="flex-shrink-0 w-14 h-14 rounded-full bg-gradient-to-r from-accent-yellow to-accent-green text-white flex items-center justify-center z-10 font-extrabold text-xl shadow-2xl ring-4 ring-primary-bg order-2 md:order-1 animate-bounce-slow">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="min-w-0 flex-1 p-6 bg-gradient-to-br from-gray-900 to-black rounded-3xl shadow-2xl border border-gray-800 md:text-right md:mr-6 mr-8 order-1 md:order-2 card-hover">
+                                <h3 class="text-2xl font-bold text-white mb-3 flex items-center md:justify-end">
+                                    <span class="bg-gradient-to-r from-accent-yellow to-accent-green bg-clip-text text-transparent">Step 4:</span>
+                                    <span class="ml-3">Collect Tokens (Dynamic Reward)</span>
+                                </h3>
+                                <p class="text-gray-300 mb-4 font-semibold">Reward is automatically credited: <span class="text-accent-yellow">20 Tokens</span> for Standard apps, or <span class="text-accent-green">30 Tokens</span> for Premium (5000T) apps.</p>
+                                <div class="flex items-center text-accent-green md:justify-end">
+                                    <i class="fas fa-gift mr-2"></i>
+                                    <span class="text-sm">Instant token rewards</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- App Modules Deep Dive -->
+        <section id="modules" class="py-16 md:py-20 gradient-bg rounded-3xl p-8 mb-16" data-aos="fade-up">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-black mb-6 font-orbitron">
+                        <span class="bg-gradient-to-r from-accent-blue to-accent-purple bg-clip-text text-transparent">
+                            <i class="fas fa-cubes mr-4"></i>Core Application Modules & Logic Applied
+                        </span>
+                    </h2>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                        Each module is carefully designed to provide the best experience for both developers and testers.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    
+                    <!-- Left Column -->
+                    <div class="space-y-8">
+                        <!-- Module 1 -->
+                        <div class="card-hover bg-gradient-to-br from-gray-900 to-black p-8 rounded-3xl shadow-2xl border border-gray-800 relative overflow-hidden">
+                            <div class="absolute -top-6 -right-6 w-20 h-20 bg-blue-500/20 rounded-full blur-xl"></div>
+                            <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-white text-xl mr-4">
+                                    <i class="fas fa-home"></i>
+                                </div>
+                                <span>1. Home Screen: Dynamic Listing & Auto-Cleanup</span>
+                            </h3>
+                            <ul class="text-gray-300 space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-accent-blue mr-2 mt-1"></i>
+                                    <span><strong class="text-purple-custom">Priority Listing:</strong> 5000T apps always rank above 100T apps. Newest app is always at the top.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-accent-blue mr-2 mt-1"></i>
+                                    <span><strong class="text-accent-red">Strict 24-Hour Cycle:</strong> All listed apps are automatically deleted after 24 hours.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-chevron-right text-accent-blue mr-2 mt-1"></i>
+                                    <span>Wallet Token counter, App List and Upload Button are always accessible.</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Module 2 -->
+                        <div class="card-hover bg-gradient-to-br from-gray-900 to-black p-8 rounded-3xl shadow-2xl border border-gray-800 relative overflow-hidden">
+                            <div class="absolute -top-6 -right-6 w-20 h-20 bg-green-500/20 rounded-full blur-xl"></div>
+                            <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center text-white text-xl mr-4">
+                                    <i class="fas fa-download"></i>
+                                </div>
+                                <span>3. Download / Test Screen: Information Hub</span>
+                            </h3>
+                            <p class="text-gray-300 mb-4">This screen hosts all app details and the multi-step flow. The button's text and function change based on the tester's action.</p>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="p-3 bg-gray-800/50 rounded-lg text-center">
+                                    <i class="fas fa-external-link-alt text-accent-blue text-xl mb-2"></i>
+                                    <p class="text-sm text-gray-300">External Links</p>
+                                </div>
+                                <div class="p-3 bg-gray-800/50 rounded-lg text-center">
+                                    <i class="fas fa-info-circle text-accent-green text-xl mb-2"></i>
+                                    <p class="text-sm text-gray-300">App Details</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="space-y-8">
+                        <!-- Module 3 -->
+                        <div class="card-hover bg-gradient-to-br from-gray-900 to-black p-8 rounded-3xl shadow-2xl border border-gray-800 relative overflow-hidden">
+                            <div class="absolute -top-6 -right-6 w-20 h-20 bg-purple-500/20 rounded-full blur-xl"></div>
+                            <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center text-white text-xl mr-4">
+                                    <i class="fas fa-upload"></i>
+                                </div>
+                                <span>2. Upload Screen: Dual-Option Listing</span>
+                            </h3>
+                            <p class="text-gray-300 mb-4">Developers access a form requiring crucial details for app listing.</p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div class="p-3 bg-gray-800/50 rounded-lg">
+                                    <p class="text-sm text-gray-400 mb-1">Option 1</p>
+                                    <p class="text-lg font-bold text-accent-yellow">100 Tokens</p>
+                                    <p class="text-xs text-gray-400">Standard Listing</p>
+                                </div>
+                                <div class="p-3 bg-gray-800/50 rounded-lg">
+                                    <p class="text-sm text-gray-400 mb-1">Option 2</p>
+                                    <p class="text-lg font-bold text-accent-green">5000 Tokens</p>
+                                    <p class="text-xs text-gray-400">Premium Listing</p>
+                                </div>
+                            </div>
+                            
+                            <div class="p-3 bg-purple-custom/10 rounded-lg border border-purple-custom/30">
+                                <p class="text-sm text-gray-300 flex items-center">
+                                    <i class="fas fa-exclamation-triangle text-accent-yellow mr-2"></i>
+                                    <strong>Limit:</strong> Only 1 app per developer per day is allowed.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Module 4 -->
+                        <div class="card-hover bg-gradient-to-br from-gray-900 to-black p-8 rounded-3xl shadow-2xl border border-gray-800 relative overflow-hidden">
+                            <div class="absolute -top-6 -right-6 w-20 h-20 bg-gray-500/20 rounded-full blur-xl"></div>
+                            <h3 class="text-2xl font-bold text-white mb-4 flex items-center">
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-r from-gray-600 to-gray-800 flex items-center justify-center text-white text-xl mr-4">
+                                    <i class="fas fa-user-circle"></i>
+                                </div>
+                                <span>4. Profile Screen: User & App Management</span>
+                            </h3>
+                            <ul class="text-gray-300 space-y-3">
+                                <li class="flex items-start">
+                                    <i class="fas fa-user text-accent-pink mr-2 mt-1"></i>
+                                    <span>User Name, Email, Token Balance, and Edit Profile functionality.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-th-list text-accent-blue mr-2 mt-1"></i>
+                                    <span><strong>My Apps Dashboard:</strong> Separate views for uploaded and tested apps.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-cog text-accent-yellow mr-2 mt-1"></i>
+                                    <span>Settings and Secure Logout options with encrypted sessions.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Feedback Section -->
+        <section id="feedback" class="py-16 md:py-20 mb-16" data-aos="fade-up">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-black mb-6 font-orbitron">
+                        <span class="bg-gradient-to-r from-accent-yellow to-accent-pink bg-clip-text text-transparent">
+                            <i class="fas fa-comments mr-4"></i>What Developers and Testers Say
+                        </span>
+                    </h2>
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                        Join thousands of satisfied users who have transformed their testing experience.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card bg-gradient-to-br from-gray-900 to-black p-8 rounded-3xl shadow-2xl border border-gray-800">
+                        <div class="flex items-center mb-6">
+                            <div class="relative">
+                                <img src="https://placehold.co/60x60/4F46E5/ffffff?text=R" alt="Avatar R" class="w-16 h-16 rounded-full border-2 border-accent-yellow">
+                                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-accent-green rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-xs text-white"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="font-bold text-white text-lg">Ravi M.</p>
+                                <p class="text-accent-yellow text-sm">Premium Developer</p>
+                                <div class="flex text-yellow-400 mt-1">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 italic mb-6">"The 5000-token listing is a game-changer. My app stayed at the top for 24 hours, ensuring I hit my required tester count quickly. The 50-token reward for testers is a great incentive!"</p>
+                        <div class="pt-4 border-t border-gray-800">
+                            <p class="text-sm text-gray-400 flex items-center">
+                                <i class="fas fa-clock text-accent-blue mr-2"></i>
+                                Joined: 3 months ago
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card bg-gradient-to-br from-gray-900 to-black p-8 rounded-3xl shadow-2xl border border-gray-800">
+                        <div class="flex items-center mb-6">
+                            <div class="relative">
+                                <img src="https://placehold.co/60x60/7C3AED/ffffff?text=A" alt="Avatar A" class="w-16 h-16 rounded-full border-2 border-accent-pink">
+                                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-accent-green rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-xs text-white"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="font-bold text-white text-lg">Anjali S.</p>
+                                <p class="text-accent-pink text-sm">Tester & Developer</p>
+                                <div class="flex text-yellow-400 mt-1">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 italic mb-6">"I love the earn-and-upload model. By testing just four standard apps, I earn 100 tokens, which means I can then upload my own game without any investment. Fair and community-focused!"</p>
+                        <div class="pt-4 border-t border-gray-800">
+                            <p class="text-sm text-gray-400 flex items-center">
+                                <i class="fas fa-coins text-accent-yellow mr-2"></i>
+                                Tokens earned: 1,250+
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card bg-gradient-to-br from-gray-900 to-black p-8 rounded-3xl shadow-2xl border border-gray-800">
+                        <div class="flex items-center mb-6">
+                            <div class="relative">
+                                <img src="https://placehold.co/60x60/EC4899/ffffff?text=S" alt="Avatar S" class="w-16 h-16 rounded-full border-2 border-accent-blue">
+                                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-accent-green rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-xs text-white"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <p class="font-bold text-white text-lg">Sameer K.</p>
+                                <p class="text-accent-blue text-sm">Active Tester</p>
+                                <div class="flex text-yellow-400 mt-1">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 italic mb-6">"The 24-hour limit is perfect. It keeps the feed clean and ensures every app gets a fair shot at the testers' attention. No more endless, stale app lists to scroll through."</p>
+                        <div class="pt-4 border-t border-gray-800">
+                            <p class="text-sm text-gray-400 flex items-center">
+                                <i class="fas fa-mobile-alt text-accent-green mr-2"></i>
+                                Apps tested: 47
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Call to Action -->
+        <section class="py-16 md:py-20 gradient-bg rounded-3xl p-8 text-center" data-aos="zoom-in">
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-3xl md:text-4xl font-black mb-6 font-orbitron">
+                    Ready to Transform Your Testing Experience?
+                </h3>
+                <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                    Join thousands of developers and testers who are already benefiting from our revolutionary platform.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-6 mb-10">
+                    <a href="https://play.google.com/store/apps/details?id=com.nadeemgs.testerscommunity" 
+                       target="_blank"
+                       class="relative group px-10 py-5 text-xl font-bold rounded-xl text-white overflow-hidden animated-border transform hover:scale-105 transition-all duration-300">
+                        <span class="relative z-10 flex items-center justify-center">
+                            <i class="fab fa-google-play text-2xl mr-4"></i>
+                            Download from Google Play
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-indigo-custom to-purple-custom"></div>
+                    </a>
+                    
+                    <a href="#token-system"
+                       class="px-10 py-5 bg-gray-800 text-white font-bold rounded-xl border-2 border-gray-700 hover:border-accent-pink hover:shadow-neon-pink transition-all duration-300 flex items-center justify-center">
+                        <i class="fas fa-info-circle text-2xl mr-4"></i>
+                        Learn More
+                    </a>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
+                    <div class="text-center p-4">
+                        <div class="text-3xl font-bold text-accent-blue mb-2">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="text-sm text-gray-300">Fast Testing</div>
+                    </div>
+                    <div class="text-center p-4">
+                        <div class="text-3xl font-bold text-accent-green mb-2">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="text-sm text-gray-300">Secure Platform</div>
+                    </div>
+                    <div class="text-center p-4">
+                        <div class="text-3xl font-bold text-accent-yellow mb-2">
+                            <i class="fas fa-coins"></i>
+                        </div>
+                        <div class="text-sm text-gray-300">Token Rewards</div>
+                    </div>
+                    <div class="text-center p-4">
+                        <div class="text-3xl font-bold text-accent-pink mb-2">
+                            <i class="fas fa-headset"></i>
+                        </div>
+                        <div class="text-sm text-gray-300">24/7 Support</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-secondary-bg border-t-2 border-indigo-custom/30 py-10 mt-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-10 mb-10">
+                <div>
+                    <div class="flex items-center space-x-3 mb-6">
+                        <img src="https://raw.githubusercontent.com/nadeemgamingstudio/testerscommunity/refs/heads/main/icon.png" 
+                             alt="12 Testers Logo" 
+                             class="h-12 w-12 rounded-xl border-2 border-accent-yellow">
+                        <div>
+                            <span class="text-xl font-black tracking-wider text-white font-orbitron">12 TESTERS</span>
+                            <div class="text-xs text-accent-blue font-bold tracking-widest uppercase mt-0.5">
+                                TESTERS COMMUNITY
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-400">
+                        Revolutionizing Android app testing with guaranteed visibility and fair token rewards for developers and testers worldwide.
+                    </p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-6 border-l-4 border-accent-yellow pl-3">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="https://nadeemgamingstudio.github.io/" class="text-gray-400 hover:text-accent-pink transition duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Home</a></li>
+                        <li><a href="#token-system" class="text-gray-400 hover:text-accent-yellow transition duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Token System</a></li>
+                        <li><a href="#how-it-works" class="text-gray-400 hover:text-accent-blue transition duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Testing Flow</a></li>
+                        <li><a href="#modules" class="text-gray-400 hover:text-accent-green transition duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> App Modules</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-6 border-l-4 border-accent-pink pl-3">Legal & Safety</h4>
+                    <ul class="space-y-3">
+                        <li><a href="https://nadeemgamingstudio.github.io/privacypolicy" target="_blank" class="text-gray-400 hover:text-accent-pink transition duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Privacy Policy</a></li>
+                        <li><a href="https://nadeemgamingstudio.github.io/testerscommunity/childsafetypolicy" target="_blank" class="text-gray-400 hover:text-accent-yellow transition duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Child Safety Policy</a></li>
+                        <li><a href="https://nadeemgamingstudio.github.io/Contact/" target="_blank" class="text-gray-400 hover:text-accent-blue transition duration-300 flex items-center"><i class="fas fa-chevron-right text-xs mr-2"></i> Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-6 border-l-4 border-accent-blue pl-3">Connect With Us</h4>
+                    <div class="flex space-x-4 mb-6">
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-indigo-custom hover:shadow-neon-indigo transition duration-300 transform hover:scale-110">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-accent-red hover:shadow-neon-red transition duration-300 transform hover:scale-110">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-accent-blue hover:shadow-neon-blue transition duration-300 transform hover:scale-110">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white hover:bg-accent-purple hover:shadow-neon-purple transition duration-300 transform hover:scale-110">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm flex items-center">
+                        <i class="fas fa-envelope text-accent-yellow mr-2"></i>
+                        nadeemgamer180@gmail.com
+                    </p>
+                    <p class="text-gray-400 text-sm flex items-center mt-2">
+                        <i class="fas fa-globe text-accent-blue mr-2"></i>
+                        https://nadeemgamingstudio.github.io
+                    </p>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        &copy; 2025 <span class="text-accent-yellow font-bold">12 Testers - Testers Community</span>. All Rights Reserved.
+                    </div>
+                    <div>
+                        Crafted with <i class="fas fa-heart text-accent-pink mx-1 animate-pulse"></i> by Nadeem Gaming Studio
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialize AOS (Animate On Scroll)
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 1000,
+                once: false,
+                offset: 100
+            });
+            
+            // Scroll to Top Button
+            const scrollTopBtn = document.getElementById('scrollTopBtn');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.add('active');
+                } else {
+                    scrollTopBtn.classList.remove('active');
+                }
+            });
+            
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Enhanced Particle Effect
+            const particlesContainer = document.querySelector('.particles');
+            const colors = ['#4F46E5', '#7C3AED', '#EC4899', '#FBD534', '#2ECC71', '#00D4FF', '#FF0066'];
+            
+            for (let i = 0; i < 100; i++) {
+                const particle = document.createElement('div');
+                particle.style.position = 'absolute';
+                const size = Math.random() * 8 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.borderRadius = '50%';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = Math.random() * 100 + 'vh';
+                particle.style.opacity = Math.random() * 0.7 + 0.1;
+                particle.style.boxShadow = `0 0 ${Math.random() * 15 + 5}px currentColor`;
+                
+                // Add animation
+                const duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s ease-in-out infinite`;
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Typewriter Effect
+            const typewriterElement = document.querySelector('.typewriter');
+            if (typewriterElement) {
+                setTimeout(() => {
+                    typewriterElement.style.animation = 'none';
+                    setTimeout(() => {
+                        typewriterElement.style.borderRight = 'none';
+                    }, 500);
+                }, 4000);
+            }
+            
+            // Highlight active section while scrolling
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('header a[href^="#"]');
+            
+            function highlightActiveSection() {
+                let current = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (scrollY >= (sectionTop - 200)) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', highlightActiveSection);
+            
+            // Add active class to home link by default
+            document.querySelector('header a[href="#"]').classList.add('active');
+            
+            // Card hover effects enhancement
+            document.querySelectorAll('.card-hover').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-15px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Animate gradient text
+            const gradientTexts = document.querySelectorAll('.animate-gradient');
+            gradientTexts.forEach(text => {
+                text.style.backgroundSize = '200% 200%';
+                text.style.animation = 'gradient 8s ease infinite';
+            });
+            
+            // Random emoji animation for fun
+            const emojis = ['🚀', '⭐', '🎯', '💎', '🔥', '⚡', '🎮', '👑'];
+            setInterval(() => {
+                const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+                const emojiElement = document.createElement('div');
+                emojiElement.innerHTML = randomEmoji;
+                emojiElement.style.position = 'fixed';
+                emojiElement.style.left = Math.random() * 100 + 'vw';
+                emojiElement.style.top = '-50px';
+                emojiElement.style.fontSize = '24px';
+                emojiElement.style.zIndex = '9999';
+                emojiElement.style.pointerEvents = 'none';
+                emojiElement.style.animation = `float ${Math.random() * 3 + 2}s linear forwards`;
+                document.body.appendChild(emojiElement);
+                
+                setTimeout(() => {
+                    emojiElement.remove();
+                }, 5000);
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
+
+
+
