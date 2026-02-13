@@ -22,7 +22,6 @@ body{background:#0f0f0f;color:#fff;transition: background 0.3s, color 0.3s}
 .logo{font-size:22px;font-weight:bold;cursor:pointer}
 .logo span{color:#ff0000}
 
-/* हेडर बटन्स */
 .header-buttons {
     margin-left: auto;
     display: flex;
@@ -112,7 +111,6 @@ video{ width:100%; max-height:55vh; }
 .comments{ padding:10px; border-top:1px solid #222; }
 .comments input{ width:100%; padding:10px; background:#222; border:none; color:#fff; border-radius:6px; }
 
-/* LOADING */
 .loading { text-align: center; padding: 40px; color: #aaa; font-size: 18px; display: none; }
 .loading.active { display: block; }
 </style>
@@ -207,24 +205,28 @@ const loading = document.getElementById("loading");
 let current = null;
 let hasViewed = {};
 
-/* MOBILE SHARE LOGIC */
-async function shareApp() {
-    const shareData = {
-        title: 'Drama TV',
-        text: 'देखिए बेहतरीन ड्रामा सीरीज Drama TV पर। अभी डाउनलोड करें!',
-        url: 'https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv'
-    };
+/* UPDATED MOBILE SHARE LOGIC */
+function shareApp() {
+    const shareText = 'देखिए बेहतरीन ड्रामा सीरीज Drama TV पर। अभी डाउनलोड करें!';
+    const shareUrl = 'https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv';
 
-    try {
-        // यह मोबाइल का ओरिजिनल शेयरिंग बॉक्स खोलेगा
-        if (navigator.share) {
-            await navigator.share(shareData);
-        } else {
-            // अगर ब्राउज़र शेयर सपोर्ट नहीं करता (जैसे पुराने डेस्कटॉप ब्राउज़र)
-            window.open(shareData.url, '_blank');
-        }
-    } catch (err) {
-        console.log('Error sharing: ' + err);
+    if (navigator.share) {
+        // यह मोबाइल का असली शेयरिंग बॉक्स है
+        navigator.share({
+            title: 'Drama TV',
+            text: shareText,
+            url: shareUrl
+        }).then(() => {
+            console.log('Thanks for sharing!');
+        })
+        .catch((err) => {
+            // अगर यूजर शेयर कैंसिल कर दे
+            console.log('Share failed or cancelled');
+        });
+    } else {
+        // अगर ब्राउज़र शेयर सपोर्ट नहीं करता, तो हम उसे WhatsApp पर भेज देंगे
+        const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + " " + shareUrl)}`;
+        window.location.href = whatsappUrl;
     }
 }
 
