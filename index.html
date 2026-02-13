@@ -9,34 +9,6 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#0f0f0f;color:#fff;transition: background 0.3s, color 0.3s}
 
-/* LIGHT MODE STYLES */
-body.light-mode {
-    background:#fff;
-    color:#000;
-}
-
-body.light-mode .header,
-body.light-mode #channelPopup,
-body.light-mode .video-card,
-body.light-mode .comments input,
-body.light-mode .player-header {
-    background:#f1f1f1;
-    border-color:#ddd;
-}
-
-body.light-mode .video-card {
-    background:#fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-
-body.light-mode .meta {
-    color:#666;
-}
-
-body.light-mode .comment {
-    color:#444;
-}
-
 /* HEADER */
 .header{
  position:fixed;top:0;width:100%;
@@ -44,7 +16,6 @@ body.light-mode .comment {
  background:#0f0f0f;
  padding:12px;border-bottom:1px solid #222;
  z-index:1000;
- transition: background 0.3s, border-color 0.3s;
 }
 
 .menu-btn{font-size:24px;background:none;border:none;color:#fff;margin-right:12px;cursor:pointer}
@@ -65,12 +36,6 @@ body.light-mode .comment {
  color:#fff;cursor:pointer;
  padding: 5px;
  border-radius: 5px;
- transition: background 0.3s;
-}
-
-.share-btn:hover,
-.refresh-btn:hover {
-    background: rgba(255,255,255,0.1);
 }
 
 /* CHANNEL POPUP */
@@ -110,35 +75,15 @@ body.light-mode .comment {
  padding: 0;
 }
 
-/* VIDEO FEED */
 .video-feed {
  display: grid;
  grid-template-columns: 1fr;
  gap: 15px;
 }
 
-/* MOBILE (डिफॉल्ट) */
 @media (max-width: 767px) {
- .video-feed {
-  grid-template-columns: 1fr;
-  padding: 0 0 15px 0;
-  margin: 0;
- }
- .main-container { padding: 0; }
  .video-card { margin: 0 0 15px 0; border-radius: 0; }
  .thumbnail { border-radius: 0; }
-}
-
-/* TABLET */
-@media (min-width: 768px) and (max-width: 1023px) {
- .video-feed { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
- .main-container { padding: 12px; }
-}
-
-/* DESKTOP */
-@media (min-width: 1024px) {
- .video-feed { grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 1200px; margin: 0 auto; padding: 15px; }
- .main-container { padding: 15px; max-width: 1200px; margin: 0 auto; }
 }
 
 /* VIDEO CARD */
@@ -146,21 +91,15 @@ body.light-mode .comment {
  background-color: #1a1a1a;
  border-radius: 8px;
  overflow: hidden;
- transition: transform 0.2s, box-shadow 0.2s;
  cursor: pointer;
-}
-
-.video-card:hover {
- transform: translateY(-5px);
- box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
 .thumbnail { width:100%; aspect-ratio:16/9; object-fit: contain; }
 
-.info{ display:flex; margin-top: 5px; padding: 8px 10px; align-items: flex-start; }
+.info{ display:flex; padding: 8px 10px; align-items: flex-start; }
 .channel-icon{ width:36px; height:36px; border-radius:50%; margin-right:8px; flex-shrink: 0; }
 .text{flex:1}
-.title{ font-size:14px; font-weight:500; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.3; min-height: 2.4em; }
+.title{ font-size:14px; font-weight:500; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .meta{ font-size:11px; color:#aaa; }
 
 /* PLAYER */
@@ -172,7 +111,6 @@ video{ width:100%; max-height:55vh; }
 .actions button{ background:none; border:none; color:#fff; cursor:pointer; }
 .comments{ padding:10px; border-top:1px solid #222; }
 .comments input{ width:100%; padding:10px; background:#222; border:none; color:#fff; border-radius:6px; }
-.comment{ font-size:13px; margin-top:8px; color:#ccc; }
 
 /* LOADING */
 .loading { text-align: center; padding: 40px; color: #aaa; font-size: 18px; display: none; }
@@ -226,326 +164,6 @@ video{ width:100%; max-height:55vh; }
 <script>
 const videos = [
  {
-  id: 49,
-  title: "गरीब युवक बिजली गिरने से टूटने वाली नजर आ गई, सब कीमत देख सका, सुंदरी और अरबों का धन हासिल!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/45.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/45.jpg",
-  channel: "गरीब युवक",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/gy.png",
- },
- {
-  id: 46,
-  title: "गरीब लड़की भिखारिन दादी को बचाया, जादुई सुनहरी चमचा मिला, खाने से अरबपति बन गई, भाग्य बदल गया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/44.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/44.jpg",
-  channel: "गरीब लड़की",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/gl.png",
- },
- {
-  id: 45,
-  title: "गरीब युवक सुरक्षा पिता को नीचा देखा, वह छिपा महानुभाव, अरबों की संपत्ति 20 साल सौतेली माँ!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/43.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/43.jpg",
-  channel: "गरीब युवक",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/gy.png",
- },
- {
-  id: 44,
-  title: "पत्नी प्रेमी मुझे जिंदा दफना, जादुई फोन से 20 साल पहले वापस आया,अरबपति बनकर बेईमानी उजागर,बदला लूंगा!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/42.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/42.jpg",
-  channel: "पत्नी ने धोखा दिया",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pndd.png",
- },
- {
-  id: 43,
-  title: "परिवार पालतू बेटे पसंद कर 18 साल रक्त भंडार बनाया,पुनर्जन्म से अरबपति बनकर रिश्ते तोड़,वे पछताने लगे",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/41.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/41.jpg",
-  channel: "पुनर्जन्म",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pj.png",
- },
- {
-  id: 42,
-  title: "मंगेतर मेरे पैसों से प्रेमी पाल रही, वेडिंग पर उजागर, सुंदर सीईओ से शादी, कड़क बदला!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/40.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/40.jpg",
-  channel: "टुटा दिल",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/td.png",
- },
- {
-  id: 41,
-  title: "गरीब लड़का प्राचीन काल में ट्रांसफर पेड़िया पर लाया, महारानी ने मन की बातें सुनी, भाग्य बदल गया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/39.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/39.jpg",
-  channel: "पूर्व राजवंश",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pr.png",
- },
- {
-  id: 40,
-  title: "गरीब युवक के माता-पिता ग्रामीणों से अपमानित, वह प्रतिभाशाली अनुसंधानकर्ता है, वापस आकर बदला लेगा!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/38.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/38.jpg",
-  channel: "गरीब युवक",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/gy.png",
- },
- {
-  id: 39,
-  title: "गरीब युवक को पीटने के बाद धन वितरण सिस्टम जागृत हुआ, ज्यादा खर्च=ज्यादा अमीर, जीवन का विजेता बन गया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/37.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/37.jpg",
-  channel: "सिस्टम जागृत",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/sj.png",
- },
- {
-  id: 38,
-  title: "गरीब युवक एक चाल से मरने कगार की सुंदर सीईओ बचाया, सब चकित, वह अरबों की संपत्ति लेकर शादी के लिए कह!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/36.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/36.jpg",
-  channel: "सबको हैरान किया!",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/shk.png",
- },
- {
-  id: 37,
-  title: "पति से धोखा खाया, पुनर्जन्म लेकर सीईओ पहचान बहाल, काउंटरअटैक सिस्टम से बदला लिया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/35.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/35.jpg",
-  channel: "पुनर्जन्म",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pj.png",
- },
- {
-  id: 36,
-  title: "डिलीवरी बॉय पत्नी की विश्वासघात देखकर धन हस्तांतरण सुपर पॉवर जागृत, एक पल में अमीर, बदला ले!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/34.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/34.jpg",
-  channel: "टुटा दिल",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/td.png",
- },
- {
-  id: 35,
-  title: "गरीब युवक भविष्य देखने का सिस्टम जागृत, सुंदरी जीतने पर लाखों इनाम, जीवन का विजेता बन गया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/33.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/33.jpg",
-  channel: "सिस्टम जागृत",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/sj.png",
- },
- {
-  id: 34,
-  title: "5 साल का लड़का पागल मां के लिए कचरा इकट्ठा, सीईओ देखकर दुखी, लेकिन नहीं जानता वह उसका बेटा है!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/32.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/32.jpg",
-  channel: "दुखी",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/d.png",
- },
- {
-  id: 33,
-  title: "दत्तक परिवार ने 18 साल तक मुझे नौकरानी बना कर प्रताड़ित किया, मैं अरबपति की बेटी हूं, बदला लूंगी!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/31.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/31.jpg",
-  channel: "अरबपति वारिस",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/ab.png",
- },
- {
-  id: 32,
-  title: "गरीब युवक किसी को बचाने पर कैशबैक सिस्टम जागृत हुआ, एक रुपये से सौ रुपये मिलते, तेजी से अमीर बन गया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/30.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/30.jpg",
-  channel: "सिस्टम जागृत",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/sj.png",
- },
- {
-  id: 31,
-  title: "पति मालकिन बचाने के लिए मुझे पानी में फेंका,सच्चाई सामने आने पर, वह पागलों की तरह पछताया क्षमा मांग!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/29.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/29.jpg",
-  channel: "टुटा दिल",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/td.png",
- },
- {
-  id: 30,
-  title: "गरीब युवक अरबों की विरासत लेकर प्राचीन काल गया, मृत्यु चाहता लेकिन अप्रत्याशित नायक बन गया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/28.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/28.jpg",
-  channel: "गरीब युवक",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/gy.png",
- },
- {
-  id: 29,
-  title: "तीन साल शादी पत्नी छुआ नहीं, वह मालकिन का बच्चा धारण, तलाक, अरबपति वारिस, वह रोते मांगती है!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/27.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/27.jpg",
-  channel: "अरबपति वारिस",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/ab.png",
- },
- {
-  id: 28,
-  title: "परिवार बहन को पसंद करता, मुझे 18 साल रक्त भंडार बनाया, दिल टूटकर चली गयी, वे पछता रहे हैं!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/26.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/26.jpg",
-  channel: "टुटा दिल",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/td.png",
- },
- {
-  id: 27,
-  title: "पत्नी की विश्वासघात देखकर अमीर सिस्टम जागृत, धोखेबाज़ पर एक थप्पड़=100 अरब, अमीर बन गया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/25.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/25.jpg",
-  channel: "सिस्टम जागृत",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/sj.png",
- },
- {
-  id: 26,
-  title: "शादी के मंच पर पत्नी ने मुझे मारकर सत्ता हासिल की, पुनर्जन्म लेकर मुझे अजेय शक्तियां मिलीं, बदला!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/24.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/24.jpg",
-  channel: "पुनर्जन्म",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pj.png",
- },
- {
-  id: 25,
-  title: "उपेक्षित गरीब युवक ज्वेलरी मूल्यांकन प्रतिभाशाली था, अरबों का खजाना प्राप्त कर सबको हैरान किया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/23.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/23.jpg",
-  channel: "सबको हैरान किया!",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/shk.png",
- },
- {
-  id: 24,
-  title: "सब लोगों ने उपेक्षा की 8 साल का लड़का ने विश्व वैज्ञानिक समस्या को हल किया, सबको हैरान किया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/22.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/22.jpg",
-  channel: "सबको हैरान किया!",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/shk.png",
- },
- {
-  id: 23,
-  title: "परिवार पालतू बेटी पसंद कर मुझे मार डाला, पुनर्जन्म लेकर अरबपति से शादी, बदला लूंगी!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/21.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/21.jpg",
-  channel: "पुनर्जन्म",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pj.png",
- },
- {
-  id: 22,
-  title: "फूड डिलीवरी युवक प्राचीन काल में चला गया, कॉल सिस्टम जागृत, सुंदरियां जीतकर सारा संसार जीत लिया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/20.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/20.jpg",
-  channel: "सिस्टम जागृत",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/sj.png",
- },
- {
-  id: 21,
-  title: "पूर्व राजवंश की विधवा नये सम्राट की रानी बनी, देखें वह कैसे कदम-कदम चिकनी चलकर,पलटवार!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/19.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/19.jpg",
-  channel: "पूर्व राजवंश",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pr.png",
- },
- {
-  id: 20,
-  title: "बेटे ने मालकिन के लिए मुझे 50 वीं मंजिल से धकेला, पुनर्जन्म लेकर सब कुछ वापस लिया, बदला लूंगी!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/18.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/18.jpg",
-  channel: "पुनर्जन्म",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pj.png",
- },
- {
-  id: 19,
-  title: "गरीब युवक ने पैसे के लिए दो महिला सीईओ का पीछा किया, जब वह अचानक गायब हो गया, वे तुरंत घबरा गईं!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/17.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/17.jpg",
-  channel: "गरीब युवक",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/gy.png",
- },
- {
-  id: 18,
-  title: "रीब युवक ने आध्यात्मिक झरना जागृत किया, अद्भुत चिकित्सा गुण, अथॉरिटी मांगती है, रातभर में अरबपति!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/16.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/16.jpg",
-  channel: "सिस्टम जागृत",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/sj.png",
- },
- {
-  id: 17,
-  title: "बेटी की जान खतरे में, पत्नी मालकिन के साथ थी, मैंने नागराज की शक्ति जागृत की, बदला लूंगा!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/15.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/15.jpg",
-  channel: "पत्नी ने धोखा दिया",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pndd.png",
- },
- {
-  id: 16,
-  title: "गरीब युवक प्राचीन डैंडी में चला गया, आधुनिक ज्ञान से धन कमाया सुंदरियों का घेरा बनाया, पलटवार सफल!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/14.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/14.jpg",
-  channel: "पुनर्जन्म",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pj.png",
- },
- {
-  id: 15,
-  title: "पत्नी मालकिन के लिए मुझे 7 साल जेल भेजा, तलाक, अरबपति दर्जा बहाल, अब उसे पछताना बेकार!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/13.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/13.jpg",
-  channel: "पत्नी ने धोखा दिया",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pndd.png",
- },
- {
-  id: 14,
-  title: "सुअर पालकर पति पढ़ाया, विश्वासघात किया, वह नहीं जानती वह पहले से अरबपति बन चुकी, कड़ा बदला लिया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/12.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/12.jpg",
-  channel: "पति ने धोखा दिया",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pndd1.png",
- },
- {
-  id: 13,
-  title: "पत्नी और मालकिन ने मुझे मारकर मेरी संपत्ति चुराई, करोड़पति में पुनर्जन्म लिया, कड़ा बदला लूंगा!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/11.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/11.jpg",
-  channel: "पुनर्जन्म",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pj.png",
- },
- {
-  id: 12,
-  title: "पसंदीदा नहीं बच्चे में पुनर्जन्म, परिवार ने सुना मेरा मन का भाव, दुष्ट दत्तक पुत्र का खुलासा किया!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/10.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/10.jpg",
-  channel: "पुनर्जन्म",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pj.png",
- },
- {
-  id: 11,
-  title: "गरीब युवक विश्वासघात पर शेफ सिस्टम जागृत, फ्राइड राइस से 10 मिलियन, अमीर होकर बदला!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/9.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/9.jpg",
-  channel: "सिस्टम जागृत",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/sj.png",
- },
- {
-  id: 10,
-  title: "अकेली लड़की में पुनर्जन्म, जानवरों की बातें सुन सकती, सीईओ संकट हटाकर 10 अरब संपत्ति प्राप्त!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/8.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/8.jpg",
-  channel: "पुनर्जन्म",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pj.png",
- },
- {
-  id: 9,
-  title: "गरीब युवक अकाल वर्ष में चला गया, फूड एक्सचेंज सिस्टम जागृत, परिवार को मांस खिलाकर अमीर बना!",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/7.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/7.jpg",
-  channel: "सिस्टम जागृत",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/sj.png",
- },
- {
-  id: 6,
-  title: "गरीब युवक की पत्नी ने धोखा दिया, मगर अद्भुत मोबाइल मिला,भविष्य से बात करके करोड़पति बनकर पलटवार किया",
-  videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/6.mp4",
-  thumbnail: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/6.jpg",
-  channel: "पत्नी ने धोखा दिया",
-  icon: "https://huggingface.co/datasets/shortdramatv/chinesedramaimage/resolve/main/pndd.png",
- },
- {
   id: 5,
   title: "गरीब युवक खर्च सिस्टम जागृत, सुंदरी को पैसे देकर 90 हजार करोड़ नकद, अरबपति बनकर पलटवार!",
   videoUrl: "https://huggingface.co/datasets/shortdramatv/chinesedramavideo/resolve/main/5.mp4",
@@ -587,33 +205,34 @@ const likesEl = document.getElementById("likes");
 const commentList = document.getElementById("commentList");
 const loading = document.getElementById("loading");
 let current = null;
-let savedScrollPos = 0;
 let hasViewed = {};
 
-/* SHARE FUNCTION */
-function shareApp() {
-    const shareUrl = 'https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv';
-    if (navigator.share) {
-        navigator.share({
-            title: 'Drama TV',
-            text: 'Check out this amazing Drama TV app!',
-            url: shareUrl
-        }).catch(console.error);
-    } else {
-        // Fallback: Copy to clipboard or just open link
-        window.open(shareUrl, '_blank');
+/* MOBILE SHARE LOGIC */
+async function shareApp() {
+    const shareData = {
+        title: 'Drama TV',
+        text: 'देखिए बेहतरीन ड्रामा सीरीज Drama TV पर। अभी डाउनलोड करें!',
+        url: 'https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv'
+    };
+
+    try {
+        // यह मोबाइल का ओरिजिनल शेयरिंग बॉक्स खोलेगा
+        if (navigator.share) {
+            await navigator.share(shareData);
+        } else {
+            // अगर ब्राउज़र शेयर सपोर्ट नहीं करता (जैसे पुराने डेस्कटॉप ब्राउज़र)
+            window.open(shareData.url, '_blank');
+        }
+    } catch (err) {
+        console.log('Error sharing: ' + err);
     }
 }
 
-/* STORAGE */
+/* STORAGE & RENDER FUNCTIONS */
 function store(id) { return JSON.parse(localStorage.getItem("v_" + id)) || {views: 0, likes: 0, comments: []}; }
 function save(id, data) { localStorage.setItem("v_" + id, JSON.stringify(data)); }
 
-/* RENDER */
-let isRendering = false;
 function render(list = videos) {
- if (isRendering) return;
- isRendering = true;
  feed.innerHTML = "";
  loading.classList.add('active');
  setTimeout(() => {
@@ -633,27 +252,17 @@ function render(list = videos) {
    feed.appendChild(div);
   });
   loading.classList.remove('active');
-  isRendering = false;
  }, 500);
 }
 
-function updateCardUI(id) {
-    const s = store(id);
-    const metaEl = document.getElementById("vmeta-" + id);
-    if (metaEl) {
-        const v = videos.find(x => x.id === id);
-        metaEl.innerText = `${v.channel} • ${s.views} views`;
-    }
-}
-
 function openVideo(id) {
- savedScrollPos = window.scrollY;
  current = videos.find(v => v.id === id);
  let s = store(current.id);
  viewsEl.innerText = s.views;
  likesEl.innerText = s.likes;
  document.getElementById("playerTitle").innerText = current.title;
  videoEl.src = current.videoUrl;
+ 
  videoEl.onplay = function() {
   if (!hasViewed[current.id]) {
    let s = store(current.id);
@@ -661,9 +270,11 @@ function openVideo(id) {
    save(current.id, s);
    viewsEl.innerText = s.views;
    hasViewed[current.id] = true;
-   updateCardUI(current.id);
+   const metaEl = document.getElementById("vmeta-" + current.id);
+   if (metaEl) metaEl.innerText = `${current.channel} • ${s.views} views`;
   }
  };
+ 
  renderComments();
  player.style.display = "flex";
  document.body.style.overflow = "hidden";
@@ -674,7 +285,6 @@ function closePlayer() {
  videoEl.src = "";
  player.style.display = "none";
  document.body.style.overflow = "auto";
- window.scrollTo(0, savedScrollPos);
 }
 
 function like() {
@@ -687,7 +297,6 @@ function like() {
 function renderComments() {
  commentList.innerHTML = "";
  const comments = store(current.id).comments;
- if (comments.length === 0) { commentList.innerHTML = "<div class='comment'>No comments yet.</div>"; return; }
  comments.forEach(c => {
   const d = document.createElement("div");
   d.className = "comment";
