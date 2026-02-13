@@ -59,7 +59,7 @@ body.light-mode .comment {
     align-items: center;
 }
 
-.theme-btn,
+.share-btn,
 .refresh-btn{
  font-size:20px;background:none;border:none;
  color:#fff;cursor:pointer;
@@ -68,7 +68,7 @@ body.light-mode .comment {
  transition: background 0.3s;
 }
 
-.theme-btn:hover,
+.share-btn:hover,
 .refresh-btn:hover {
     background: rgba(255,255,255,0.1);
 }
@@ -104,88 +104,41 @@ body.light-mode .comment {
  margin-right:25px
 }
 
-/* MAIN CONTAINER - रिस्पॉन्सिव के लिए */
+/* MAIN CONTAINER */
 .main-container {
  margin-top: 70px;
- padding: 0; /* मोबाइल पर लेफ्ट-राइट पैडिंग हटाई */
+ padding: 0;
 }
 
-/* VIDEO FEED - मोबाइल और डेस्कटॉप के लिए अलग-अलग ग्रिड */
+/* VIDEO FEED */
 .video-feed {
  display: grid;
- grid-template-columns: 1fr; /* मोबाइल के लिए 1 कॉलम */
- gap: 15px; /* गैप कम किया */
+ grid-template-columns: 1fr;
+ gap: 15px;
 }
 
-/* MOBILE (डिफॉल्ट) - 1 कॉलम, फुल विड्थ */
+/* MOBILE (डिफॉल्ट) */
 @media (max-width: 767px) {
  .video-feed {
   grid-template-columns: 1fr;
-  padding: 0 0 15px 0; /* सिर्फ बॉटम पैडिंग */
-  margin: 0; /* मार्जिन हटाया */
+  padding: 0 0 15px 0;
+  margin: 0;
  }
- 
- .main-container {
-  padding: 0; /* लेफ्ट-राइट पैडिंग हटाई */
- }
- 
- .video-card {
-  margin: 0 0 15px 0; /* बॉटम मार्जिन छोड़ा */
-  border-radius: 0; /* बॉर्डर रेडियस हटाया */
- }
- 
- .thumbnail {
-  border-radius: 0; /* थंबनेल बॉर्डर रेडियस हटाया */
- }
+ .main-container { padding: 0; }
+ .video-card { margin: 0 0 15px 0; border-radius: 0; }
+ .thumbnail { border-radius: 0; }
 }
 
-/* TABLET (768px से 1023px) - 2-3 कॉलम */
+/* TABLET */
 @media (min-width: 768px) and (max-width: 1023px) {
- .video-feed {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px; /* गैप कम किया */
-  max-width: 100%;
-  padding: 12px;
- }
- 
- .main-container {
-  padding: 12px;
-  max-width: 100%;
- }
+ .video-feed { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
+ .main-container { padding: 12px; }
 }
 
-/* DESKTOP (1024px से 1365px) - 4 कॉलम */
-@media (min-width: 1024px) and (max-width: 1365px) {
- .video-feed {
-  grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 15px;
- }
- 
- .main-container {
-  padding: 15px;
-  max-width: 1200px;
-  margin: 0 auto;
- }
-}
-
-/* LARGE DESKTOP (1366px और ऊपर) - 5-6 कॉलम */
-@media (min-width: 1366px) {
- .video-feed {
-  grid-template-columns: repeat(5, 1fr);
-  gap: 18px;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 18px;
- }
- 
- .main-container {
-  padding: 18px;
-  max-width: 1400px;
-  margin: 0 auto;
- }
+/* DESKTOP */
+@media (min-width: 1024px) {
+ .video-feed { grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 1200px; margin: 0 auto; padding: 15px; }
+ .main-container { padding: 15px; max-width: 1200px; margin: 0 auto; }
 }
 
 /* VIDEO CARD */
@@ -195,7 +148,6 @@ body.light-mode .comment {
  overflow: hidden;
  transition: transform 0.2s, box-shadow 0.2s;
  cursor: pointer;
- margin-bottom: 0px;
 }
 
 .video-card:hover {
@@ -203,185 +155,28 @@ body.light-mode .comment {
  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }
 
-.thumbnail {
- width:100%;
- aspect-ratio:16/9;
- object-fit: contain; /* contain से cover किया ताकि पूरी जगह भरे */
- border-radius: 8px 8px 0 0;
-}
+.thumbnail { width:100%; aspect-ratio:16/9; object-fit: contain; }
 
-/* INFO - स्पेस कम किया */
-.info{
- display:flex;
- margin-top: 5px; /* 10px से 5px किया */
- padding: 8px 10px; /* 12px से 8px किया */
- align-items: flex-start; /* टॉप अलाइन किया */
-}
-
-.channel-icon{
- width:36px;height:36px; /* 40px से 36px किया */
- border-radius:50%;
- margin-right:8px; /* 10px से 8px किया */
- flex-shrink: 0;
- margin-top: 2px; /* थोड़ा ऊपर से स्पेस */
-}
-
+.info{ display:flex; margin-top: 5px; padding: 8px 10px; align-items: flex-start; }
+.channel-icon{ width:36px; height:36px; border-radius:50%; margin-right:8px; flex-shrink: 0; }
 .text{flex:1}
-.title{
- font-size:14px; /* 15px से 14px किया */
- font-weight:500;
- display:-webkit-box;
- -webkit-line-clamp:2;
- -webkit-box-orient:vertical;
- overflow:hidden;
- line-height:1.3;
- min-height: 2.4em; /* 2.6em से 2.4em किया */
- margin-bottom: 2px; /* थोड़ा स्पेस */
-}
-
-.meta{
- font-size:11px; /* 12px से 11px किया */
- color:#aaa;
- margin-top:0; /* 4px से 0 किया */
-}
+.title{ font-size:14px; font-weight:500; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.3; min-height: 2.4em; }
+.meta{ font-size:11px; color:#aaa; }
 
 /* PLAYER */
-#player{
- position:fixed;
- inset:0;
- background:#000;
- display:none;
- flex-direction:column;
- z-index:3000
-}
-
-.player-header{
- display:flex;
- align-items:center;
- padding:12px;
- background:#000;
-}
-
-.back-btn{
- font-size:24px;
- background:none;
- border:none;
- color:#fff;
- margin-right:10px;
- cursor:pointer;
-}
-
-video{
- width:100%;
- max-height:55vh;
-}
-
-.actions{
- display:flex;
- justify-content:space-around;
- padding:10px;
- border-top:1px solid #222;
-}
-
-.actions button{
- background:none;
- border:none;
- color:#fff;
- cursor:pointer;
-}
-
-/* COMMENTS */
-.comments{
- padding:10px;
- border-top:1px solid #222;
-}
-
-.comments input{
- width:100%;
- padding:10px;
- background:#222;
- border:none;
- color:#fff;
- border-radius:6px;
-}
-
-.comment{
- font-size:13px;
- margin-top:8px;
- color:#ccc;
-}
-
-/* DESKTOP के लिए हेडर सुधार */
-@media (min-width: 1024px) {
- .header {
-  padding: 12px 40px;
- }
- 
- .menu-btn {
-  font-size: 20px;
- }
- 
- .logo {
-  font-size: 24px;
- }
- 
- .theme-btn,
- .refresh-btn {
-  font-size: 18px;
- }
-}
-
-/* DESKTOP के लिए प्लेयर सुधार */
-@media (min-width: 1024px) {
- video {
-  max-height: 70vh;
- }
- 
- #player {
-  padding: 20px;
-  box-sizing: border-box;
- }
- 
- .player-header {
-  padding: 20px;
- }
- 
- .actions, .comments {
-  padding: 20px;
- }
-}
-
-/* CHANNEL POPUP डेस्कटॉप के लिए */
-@media (min-width: 768px) {
- #channelPopup {
-  width: 350px;
-  left: -350px;
- }
- 
- #channelPopup.active {
-  left: 0;
- }
-}
+#player{ position:fixed; inset:0; background:#000; display:none; flex-direction:column; z-index:3000 }
+.player-header{ display:flex; align-items:center; padding:12px; background:#000; }
+.back-btn{ font-size:24px; background:none; border:none; color:#fff; margin-right:10px; cursor:pointer; }
+video{ width:100%; max-height:55vh; }
+.actions{ display:flex; justify-content:space-around; padding:10px; border-top:1px solid #222; }
+.actions button{ background:none; border:none; color:#fff; cursor:pointer; }
+.comments{ padding:10px; border-top:1px solid #222; }
+.comments input{ width:100%; padding:10px; background:#222; border:none; color:#fff; border-radius:6px; }
+.comment{ font-size:13px; margin-top:8px; color:#ccc; }
 
 /* LOADING */
-.loading {
- text-align: center;
- padding: 40px;
- color: #aaa;
- font-size: 18px;
- display: none;
-}
-
-.loading.active {
- display: block;
-}
-
-/* DESKTOP के लिए थंबनेल क्वालिटी */
-@media (min-width: 1024px) {
- .thumbnail {
-  height: 180px;
- }
-}
+.loading { text-align: center; padding: 40px; color: #aaa; font-size: 18px; display: none; }
+.loading.active { display: block; }
 </style>
 </head>
 
@@ -391,7 +186,7 @@ video{
 <button class="menu-btn" onclick="openChannels()">☰</button>
 <div class="logo" onclick="showAll()">Drama <span>TV</span></div>
 <div class="header-buttons">
-    <button class="theme-btn" onclick="toggleTheme()" title="Dark/Light Mode">🌓</button>
+    <button class="share-btn" onclick="shareApp()" title="Share App">📤</button>
     <button class="refresh-btn" onclick="refreshHome()">↻</button>
 </div>
 </header>
@@ -415,12 +210,7 @@ video{
   <div id="playerTitle"></div>
  </div>
 
- <video id="video"
-  controls autoplay playsinline
-  controlsList="nodownload"
-  disablePictureInPicture
-  oncontextmenu="return false">
- </video>
+ <video id="video" controls autoplay playsinline controlsList="nodownload" disablePictureInPicture oncontextmenu="return false"></video>
 
  <div class="actions">
   <button onclick="like()">💛 <span id="likes">0</span></button>
@@ -434,7 +224,6 @@ video{
 </div>
 
 <script>
-// वीडियो डेटा
 const videos = [
  {
   id: 49,
@@ -798,71 +587,40 @@ const likesEl = document.getElementById("likes");
 const commentList = document.getElementById("commentList");
 const loading = document.getElementById("loading");
 let current = null;
-let savedScrollPos = 0; // स्क्रॉल पोजीशन बचाने के लिए
-
-// व्यू काउंट केवल एक बार बढ़े
+let savedScrollPos = 0;
 let hasViewed = {};
 
-/* THEME TOGGLE */
-function toggleTheme() {
-    const body = document.body;
-    const themeBtn = document.querySelector('.theme-btn');
-    if (body.classList.contains('light-mode')) {
-        body.classList.remove('light-mode');
-        themeBtn.textContent = '🌓';
-        localStorage.setItem('theme', 'dark');
+/* SHARE FUNCTION */
+function shareApp() {
+    const shareUrl = 'https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv';
+    if (navigator.share) {
+        navigator.share({
+            title: 'Drama TV',
+            text: 'Check out this amazing Drama TV app!',
+            url: shareUrl
+        }).catch(console.error);
     } else {
-        body.classList.add('light-mode');
-        themeBtn.textContent = '🌞';
-        localStorage.setItem('theme', 'light');
-    }
-}
-
-function loadTheme() {
-    const savedTheme = localStorage.getItem('theme');
-    const themeBtn = document.querySelector('.theme-btn');
-    if (savedTheme === 'light') {
-        document.body.classList.add('light-mode');
-        themeBtn.textContent = '';//🌞
-    } else {
-        document.body.classList.remove('light-mode');
-        themeBtn.textContent = '';//🌓
+        // Fallback: Copy to clipboard or just open link
+        window.open(shareUrl, '_blank');
     }
 }
 
 /* STORAGE */
-function store(id) {
- return JSON.parse(localStorage.getItem("v_" + id)) || {views: 0, likes: 0, comments: []};
-}
-
-function save(id, data) {
- localStorage.setItem("v_" + id, JSON.stringify(data));
-}
+function store(id) { return JSON.parse(localStorage.getItem("v_" + id)) || {views: 0, likes: 0, comments: []}; }
+function save(id, data) { localStorage.setItem("v_" + id, JSON.stringify(data)); }
 
 /* RENDER */
 let isRendering = false;
-let currentVideoList = videos;
-
 function render(list = videos) {
  if (isRendering) return;
  isRendering = true;
- const uniqueVideos = [];
- const seenIds = new Set();
- for (const video of list) {
-  if (!seenIds.has(video.id)) {
-   seenIds.add(video.id);
-   uniqueVideos.push(video);
-  }
- }
- currentVideoList = uniqueVideos;
  feed.innerHTML = "";
  loading.classList.add('active');
  setTimeout(() => {
-  uniqueVideos.forEach(v => {
+  list.forEach(v => {
    const s = store(v.id);
    const div = document.createElement("div");
    div.className = "video-card";
-   div.id = "vcard-" + v.id; // यूनिक आईडी
    div.innerHTML = `
     <img src="${v.thumbnail}" class="thumbnail" onclick="openVideo(${v.id})">
     <div class="info">
@@ -879,7 +637,6 @@ function render(list = videos) {
  }, 500);
 }
 
-/* SMART UPDATE (पूरे पेज को रेंडर किए बिना डेटा अपडेट करना) */
 function updateCardUI(id) {
     const s = store(id);
     const metaEl = document.getElementById("vmeta-" + id);
@@ -889,18 +646,14 @@ function updateCardUI(id) {
     }
 }
 
-/* PLAYER */
 function openVideo(id) {
- // स्क्रॉल पोजीशन सेव करें
  savedScrollPos = window.scrollY;
- 
  current = videos.find(v => v.id === id);
  let s = store(current.id);
  viewsEl.innerText = s.views;
  likesEl.innerText = s.likes;
  document.getElementById("playerTitle").innerText = current.title;
  videoEl.src = current.videoUrl;
- 
  videoEl.onplay = function() {
   if (!hasViewed[current.id]) {
    let s = store(current.id);
@@ -908,13 +661,12 @@ function openVideo(id) {
    save(current.id, s);
    viewsEl.innerText = s.views;
    hasViewed[current.id] = true;
-   updateCardUI(current.id); // सिर्फ कार्ड अपडेट करें
+   updateCardUI(current.id);
   }
  };
  renderComments();
  player.style.display = "flex";
  document.body.style.overflow = "hidden";
- hasViewed[current.id] = false;
 }
 
 function closePlayer() {
@@ -922,7 +674,6 @@ function closePlayer() {
  videoEl.src = "";
  player.style.display = "none";
  document.body.style.overflow = "auto";
- // वापस वहीं स्क्रॉल करें जहाँ यूजर था
  window.scrollTo(0, savedScrollPos);
 }
 
@@ -931,17 +682,12 @@ function like() {
  s.likes++;
  save(current.id, s);
  likesEl.innerText = s.likes;
- updateCardUI(current.id);
 }
 
-/* COMMENTS */
 function renderComments() {
  commentList.innerHTML = "";
  const comments = store(current.id).comments;
- if (comments.length === 0) {
-  commentList.innerHTML = "<div class='comment'>No comments yet.</div>";
-  return;
- }
+ if (comments.length === 0) { commentList.innerHTML = "<div class='comment'>No comments yet.</div>"; return; }
  comments.forEach(c => {
   const d = document.createElement("div");
   d.className = "comment";
@@ -960,36 +706,24 @@ function addComment(e) {
  }
 }
 
-/* CHANNELS */
 function openChannels() { document.getElementById("channelPopup").classList.add("active"); }
 function closeChannels() { document.getElementById("channelPopup").classList.remove("active"); }
 
-const channelList = document.getElementById("channelList");
+const channelContainer = document.getElementById("channelList");
 const uniqueChannels = [...new Set(videos.map(v => v.channel))];
-const allChannelsDiv = document.createElement("div");
-allChannelsDiv.className = "channel-item";
-allChannelsDiv.innerHTML = `<img src="https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?w=100"><div>All Channels</div>`;
-allChannelsDiv.onclick = () => { render(videos); closeChannels(); };
-channelList.appendChild(allChannelsDiv);
-
 uniqueChannels.forEach(name => {
  const v = videos.find(x => x.channel === name);
  const d = document.createElement("div");
  d.className = "channel-item";
  d.innerHTML = `<img src="${v.icon}"><div>${name}</div>`;
  d.onclick = () => { render(videos.filter(x => x.channel === name)); closeChannels(); };
- channelList.appendChild(d);
+ channelContainer.appendChild(d);
 });
 
 function showAll() { render(videos); }
 function refreshHome() { location.reload(); }
 
-window.addEventListener('DOMContentLoaded', function() {
-    loadTheme();
-    render(videos);
-});
+window.addEventListener('DOMContentLoaded', () => render(videos));
 </script>
 </body>
 </html>
-
-
