@@ -3,36 +3,262 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>#</title>
-
-    <meta name="description" content="#">
-    <meta name="keywords" content="#">
-    <meta name="author" content="">
-
-    <link rel="icon" type="image/x-icon" href="#">
-
+    <title>Full Screen Audio Player</title>
     <style>
+        @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+        
+        * { box-sizing: border-box; outline: 0; margin: 0; padding: 0; }
+        
         body, html {
-            margin: 0;
-            padding: 0;
             height: 100%;
             width: 100%;
-            overflow: hidden;
+            overflow: hidden; /* बाहरी स्क्रॉल बंद */
+            background: #0f172a;
+            font-family: "Segoe UI", sans-serif;
         }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            position: absolute;
-            top: 0;
-            left: 0;
+
+        /* मुख्य कंटेनर जो पूरी स्क्रीन घेरेगा */
+        #simp {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            color: #f8fafc;
         }
+
+        /* Header / Cover Section */
+        .Audio_album {
+            padding: 20px;
+            background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+            flex-shrink: 0;
+        }
+        .simp-cover img {
+            width: 70px;
+            height: 70px;
+            border-radius: 10px;
+            border: 2px solid #3b82f6;
+            object-fit: cover;
+        }
+        .simp-info { margin-left: 15px; }
+        .simp-title { font-size: 18px; font-weight: 700; color: #3b82f6; }
+        .simp-artist { font-size: 13px; color: #94a3b8; }
+
+        /* प्लेलिस्ट सेक्शन - यह हिस्सा पूरी खाली जगह घेरेगा और स्क्रॉल होगा */
+        .Audio-playlist {
+            flex-grow: 1;
+            overflow-y: auto;
+            background: #0f172a;
+        }
+        #simp ul { list-style: none; }
+        #simp ul li {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #1e293b;
+            transition: 0.2s;
+            display: flex;
+            justify-content: space-between;
+        }
+        #simp ul li:hover { background: #1e293b; }
+        #simp ul li.simp-active {
+            background: rgba(59, 130, 246, 0.15);
+            border-left: 5px solid #3b82f6;
+            color: #3b82f6;
+        }
+
+        /* कंट्रोल सेक्शन - यह हमेशा नीचे चिपका रहेगा */
+        .Audio_controls {
+            padding: 20px;
+            background: #1e293b;
+            border-top: 2px solid #3b82f6;
+            flex-shrink: 0;
+        }
+
+        .simp-time-wrapper {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+            font-family: monospace;
+        }
+        #progress { width: 100%; cursor: pointer; accent-color: #3b82f6; }
+
+        .main-btns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin: 15px 0;
+        }
+        button { background: none; border: 0; color: #cbd5e1; cursor: pointer; font-size: 20px; }
+        .simp-plause { font-size: 35px; color: #3b82f6; }
+
+        .bottom-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .vol-box { display: flex; align-items: center; gap: 8px; }
+        .simp-speed-btn {
+            font-weight: bold; font-size: 14px; color: #3b82f6;
+            border: 1px solid #3b82f6; border-radius: 5px; padding: 3px 10px;
+        }
+
+        /* Scrollbar Styling */
+        .Audio-playlist::-webkit-scrollbar { width: 6px; }
+        .Audio-playlist::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <iframe src="https://cloud.onlinegames.io/games/2025/html/pixelmon-town/game.html"></iframe>
+<div id="simp">
+  <div class="Audio_album">
+      <div class="simp-cover"><img src="https://pocket-fm.odoo.com/web/image/279-1188a6d6/y1001.webp" id="player-cover"></div>
+      <div class="simp-info">
+          <div class="simp-title" id="player-title">लोनली वुल्फ</div>
+          <div class="simp-artist">अभी चल रहा है...</div>
+      </div>
+  </div>
+
+  <div class="Audio-playlist">
+    <ul id="playlist-ul">
+      <li class="simp-active"><span class="Audio_source" data-src="https://huggingface.co/datasets/420dramatv/p1/resolve/main/1.mp3" data-cover="https://pocket-fm.odoo.com/web/image/279-1188a6d6/y1001.webp">🎧 Episode → 1</span></li>
+      <li><span class="Audio_source" data-src="https://huggingface.co/datasets/420dramatv/p1/resolve/main/2.mp3" data-cover="https://pocket-fm.odoo.com/web/image/279-1188a6d6/y1001.webp">🎧 Episode → 2</span></li>
+      <li><span class="Audio_source" data-src="https://huggingface.co/datasets/420dramatv/p1/resolve/main/3.mp3" data-cover="https://pocket-fm.odoo.com/web/image/279-1188a6d6/y1001.webp">🎧 Episode → 3</span></li>
+      <li><span class="Audio_source" data-src="https://huggingface.co/datasets/420dramatv/p1/resolve/main/4.mp3" data-cover="https://pocket-fm.odoo.com/web/image/279-1188a6d6/y1001.webp">🎧 Episode → 4</span></li>
+      <li><span class="Audio_source" data-src="https://huggingface.co/datasets/420dramatv/p1/resolve/main/5.mp3" data-cover="https://pocket-fm.odoo.com/web/image/279-1188a6d6/y1001.webp">🎧 Episode → 5</span></li>
+      <li><span class="Audio_source" data-src="https://huggingface.co/datasets/420dramatv/p1/resolve/main/6.mp3" data-cover="https://pocket-fm.odoo.com/web/image/279-1188a6d6/y1001.webp">🎧 Episode → 6</span></li>
+      <li><span class="Audio_source" data-src="https://huggingface.co/datasets/420dramatv/p1/resolve/main/7.mp3" data-cover="https://pocket-fm.odoo.com/web/image/279-1188a6d6/y1001.webp">🎧 Episode → 7</span></li>
+      <li><span class="Audio_source" data-src="https://huggingface.co/datasets/420dramatv/p1/resolve/main/8.mp3" data-cover="https://pocket-fm.odoo.com/web/image/279-1188a6d6/y1001.webp">🎧 Episode → 8</span></li>
+      <li><span class="Audio_source" data-src="https://huggingface.co/datasets/420dramatv/p1/resolve/main/9.mp3" data-cover="https://pocket-fm.odoo.com/web/image/279-1188a6d6/y1001.webp">🎧 Episode → 9</span></li>
+      <li><span class="Audio_source" data-src="https://huggingface.co/datasets/420dramatv/p1/resolve/main/10.mp3" data-cover="https://pocket-fm.odoo.com/web/image/279-1188a6d6/y1001.webp">🎧 Episode → 10</span></li>
+    </ul>
+  </div>
+
+  <div class="Audio_controls">
+      <div class="simp-time-wrapper">
+          <span id="current-time">00:00</span>
+          <span id="remaining-time">-00:00</span>
+      </div>
+      <input type="range" id="progress" value="0" min="0" max="100">
+      
+      <div class="main-btns">
+          <button class="fa fa-backward" id="prev"></button>
+          <button class="fa fa-play simp-plause" id="play-pause"></button>
+          <button class="fa fa-forward" id="next"></button>
+      </div>
+
+      <div class="bottom-bar">
+          <div class="vol-box">
+              <i class="fa fa-volume-up"></i>
+              <input type="range" id="volume" value="100" min="0" max="100" style="width:80px;">
+          </div>
+          <div class="simp-speed-btn" id="speed-btn">1x</div>
+      </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const audio = new Audio();
+    const playlist = document.querySelectorAll('#playlist-ul li');
+    const playBtn = document.getElementById('play-pause');
+    const speedBtn = document.getElementById('speed-btn');
+    const progressBar = document.getElementById('progress');
+    const volumeBar = document.getElementById('volume');
+    const curTimeText = document.getElementById('current-time');
+    const remTimeText = document.getElementById('remaining-time');
+    
+    let currentTrack = 0;
+    let playbackSpeed = 1.0;
+
+    function formatTime(seconds) {
+        if (isNaN(seconds)) return "00:00";
+        let m = Math.floor(seconds / 60);
+        let s = Math.floor(seconds % 60);
+        return `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+    }
+
+    function loadTrack(index) {
+        const source = playlist[index].querySelector('.Audio_source');
+        audio.src = source.dataset.src;
+        document.getElementById('player-cover').src = source.dataset.cover;
+        document.getElementById('player-title').innerText = source.innerText;
+        
+        playlist.forEach(li => li.classList.remove('simp-active'));
+        playlist[index].classList.add('simp-active');
+        
+        audio.playbackRate = playbackSpeed;
+        // Scroll to active item
+        playlist[index].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    playBtn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            playBtn.classList.replace('fa-play', 'fa-pause');
+        } else {
+            audio.pause();
+            playBtn.classList.replace('fa-pause', 'fa-play');
+        }
+    });
+
+    speedBtn.addEventListener('click', () => {
+        const speeds = [1.0, 1.25, 1.5, 2.0];
+        playbackSpeed = speeds[(speeds.indexOf(playbackSpeed) + 1) % speeds.length];
+        audio.playbackRate = playbackSpeed;
+        speedBtn.innerText = playbackSpeed + 'x';
+    });
+
+    volumeBar.addEventListener('input', () => audio.volume = volumeBar.value / 100);
+
+    audio.addEventListener('timeupdate', () => {
+        const percent = (audio.currentTime / audio.duration) * 100;
+        progressBar.value = percent || 0;
+        curTimeText.innerText = formatTime(audio.currentTime);
+        remTimeText.innerText = "-" + formatTime(audio.duration - audio.currentTime);
+    });
+
+    progressBar.addEventListener('input', () => {
+        audio.currentTime = (progressBar.value / 100) * audio.duration;
+    });
+
+    playlist.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            currentTrack = index;
+            loadTrack(currentTrack);
+            audio.play();
+            playBtn.classList.replace('fa-play', 'fa-pause');
+        });
+    });
+
+    document.getElementById('next').addEventListener('click', () => {
+        currentTrack = (currentTrack + 1) % playlist.length;
+        loadTrack(currentTrack);
+        audio.play();
+        playBtn.classList.replace('fa-play', 'fa-pause');
+    });
+
+    document.getElementById('prev').addEventListener('click', () => {
+        currentTrack = (currentTrack - 1 + playlist.length) % playlist.length;
+        loadTrack(currentTrack);
+        audio.play();
+        playBtn.classList.replace('fa-play', 'fa-pause');
+    });
+
+    audio.addEventListener('ended', () => {
+        currentTrack = (currentTrack + 1) % playlist.length;
+        loadTrack(currentTrack);
+        audio.play();
+    });
+
+    loadTrack(0);
+});
+</script>
 
 </body>
 </html>
