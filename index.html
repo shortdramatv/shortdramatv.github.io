@@ -4,10 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 <title>Drama TV</title>
-
 <!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 <style>
 /* ==================== पुराने स्टाइल (बिल्कुल यथावत) ==================== */
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
@@ -400,76 +398,130 @@ video{ width:100%; max-height:55vh; }
 </div>
 
 <script>
-// ==================== ग्लोबल डेटा स्टोर (सिमुलेशन) ====================
-// नोट: localStorage केवल एक डिवाइस पर काम करता है। 
-// सभी डिवाइस पर एक समान काउंट के लिए आपको सर्वर-साइड स्टोरेज चाहिए।
-// उदाहरण के लिए, आप JSONbin.io का उपयोग कर सकते हैं (मुफ्त)।
-// नीचे JSONbin.io का उपयोग करने का तरीका टिप्पणी में दिया गया है।
+// ==================== JSONBin.io कॉन्फ़िगरेशन ====================
+// नीचे दिए गए placeholder को अपनी Bin ID और Master Key से बदलें
+const BIN_ID = "699c279243b1c97be9962290";         // यहाँ अपनी Bin ID डालें (जैसे "65a1b2c3d4e5f67890a1b2c3")
+const MASTER_KEY = "$2a$10$26UQhsrzPhnqX5zEOkjGpuHaJ6zhnbVABPrFCaTYA0RZxYJcycjj."; // यहाँ अपनी Master Key डालें (जैसे "$2b$10$abcdefghijklmnopqrstuvwx")
+const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-const GLOBAL_STORE_KEY = 'drama_tv_global_store_v2';
+// ==================== ग्लोबल डेटा कैश ====================
+let globalStore = {
+    visitors: 0,
+    deviceTracked: {},
+    videoStats: {}   // { videoId: { views: 0, likes: 0 } }
+};
 
-function getGlobalStore() {
-    let store = localStorage.getItem(GLOBAL_STORE_KEY);
-    if (!store) {
-        store = {
-            videoViews: {},          // { videoId: count }
-            visitors: 0,             // कुल यूनिक विज़िटर (डिवाइस के हिसाब से)
-            deviceTracked: false,    // क्या इस डिवाइस को ट्रैक किया गया है
-        };
-    } else {
-        store = JSON.parse(store);
+// ==================== JSONBin.io हेल्पर फंक्शन ====================
+async function fetchGlobalStore() {
+    try {
+        const response = await fetch(API_URL, {
+            method: 'GET',
+            headers: {
+                'X-Master-Key': MASTER_KEY,
+                'X-Bin-Meta': 'false',
+            }
+        });
+        if (!response.ok) throw new Error('Network error');
+        const data = await response.json();
+        // सुनिश्चित करें कि data में सही प्रॉपर्टीज हैं
+        if (!data || typeof data !== 'object') {
+            return { visitors: 0, deviceTracked: {}, videoStats: {} };
+        }
+        // पुराने डेटा फॉर्मेट को अपग्रेड करें (अगर जरूरत हो)
+        if (data.videoViews && !data.videoStats) {
+            // पुराने फॉर्मेट को नए में बदलें
+            const videoStats = {};
+            for (let id in data.videoViews) {
+                videoStats[id] = { views: data.videoViews[id], likes: 0 };
+            }
+            data.videoStats = videoStats;
+            delete data.videoViews;
+        }
+        if (!data.videoStats) data.videoStats = {};
+        if (!data.deviceTracked) data.deviceTracked = {};
+        if (!data.visitors) data.visitors = 0;
+        return data;
+    } catch (error) {
+        console.error("Error fetching global store:", error);
+        return { visitors: 0, deviceTracked: {}, videoStats: {} };
     }
-    return store;
 }
 
-function saveGlobalStore(store) {
-    localStorage.setItem(GLOBAL_STORE_KEY, JSON.stringify(store));
-}
-
-// ==================== विज़िटर ट्रैकिंग (नई डिवाइस) ====================
-function trackNewVisitor() {
-    const store = getGlobalStore();
-    if (!store.deviceTracked) {
-        store.visitors = (store.visitors || 0) + 1;
-        store.deviceTracked = true;
-        saveGlobalStore(store);
+async function saveGlobalStore(newStore) {
+    try {
+        await fetch(API_URL, {
+            method: 'PUT',
+            headers: {
+                'X-Master-Key': MASTER_KEY,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newStore)
+        });
+        // कैश अपडेट करें
+        globalStore = newStore;
+    } catch (error) {
+        console.error("Error saving global store:", error);
     }
-    return store.visitors;
 }
 
-// ==================== वीडियो व्यू ग्लोबल ====================
-function getGlobalVideoViews(videoId) {
-    const store = getGlobalStore();
-    return store.videoViews[videoId] || 0;
+// ==================== विज़िटर ट्रैकिंग ====================
+async function trackNewVisitor() {
+    const deviceId = localStorage.getItem('device_id');
+    if (!deviceId) {
+        const newDeviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substring(2);
+        localStorage.setItem('device_id', newDeviceId);
+        globalStore.deviceTracked[newDeviceId] = true;
+        globalStore.visitors += 1;
+        await saveGlobalStore(globalStore);
+    } else if (!globalStore.deviceTracked[deviceId]) {
+        globalStore.deviceTracked[deviceId] = true;
+        globalStore.visitors += 1;
+        await saveGlobalStore(globalStore);
+    }
+    return globalStore.visitors;
 }
 
-function incrementGlobalVideoViews(videoId) {
-    const store = getGlobalStore();
-    store.videoViews[videoId] = (store.videoViews[videoId] || 0) + 1;
-    saveGlobalStore(store);
+// ==================== वीडियो स्टैट्स (ग्लोबल) ====================
+function getVideoStats(videoId) {
+    if (!globalStore.videoStats[videoId]) {
+        globalStore.videoStats[videoId] = { views: 0, likes: 0 };
+    }
+    return globalStore.videoStats[videoId];
+}
+
+async function incrementVideoViews(videoId) {
+    const stats = getVideoStats(videoId);
+    stats.views += 1;
+    await saveGlobalStore(globalStore);
+    return stats.views;
+}
+
+async function incrementVideoLikes(videoId) {
+    const stats = getVideoStats(videoId);
+    stats.likes += 1;
+    await saveGlobalStore(globalStore);
+    return stats.likes;
 }
 
 // ==================== कुल व्यूज (सभी वीडियो) ====================
-function getTotalGlobalViews() {
-    const store = getGlobalStore();
+function getTotalViews() {
     let total = 0;
-    for (let id in store.videoViews) {
-        total += store.videoViews[id];
+    for (let id in globalStore.videoStats) {
+        total += globalStore.videoStats[id].views || 0;
     }
     return total;
 }
 
-// ==================== स्टैट्स यूआई अपडेट ====================
+// ==================== यूआई अपडेट ====================
 function updateStatsUI() {
-    const store = getGlobalStore();
-    document.getElementById('totalVisitors').innerText = store.visitors || 0;
-    document.getElementById('totalViews').innerText = getTotalGlobalViews();
-    document.getElementById('totalVideos').innerText = videos.length; // ऑटोमैटिक
+    document.getElementById('totalVisitors').innerText = globalStore.visitors || 0;
+    document.getElementById('totalViews').innerText = getTotalViews();
+    document.getElementById('totalVideos').innerText = videos.length;
 }
 
 // ==================== वीडियो डेटा (यथावत) ====================
 const videos = [
- 
+
  {
   id: 104,
   title: "सीईओ को पिता का इलाज कराने के लिए गाकर पैसे कमा रही छोटी लड़की से मिला, वह उसकी अपनी जैविक बेटी है!",
@@ -1265,26 +1317,19 @@ const videos = [
  },
 ];
 
-// ==================== स्टोर फंक्शन (व्यूज ग्लोबल, बाकी लोकल) ====================
-function store(id) {
-    let local = JSON.parse(localStorage.getItem("v_" + id)) || { likes: 0, comments: [] };
-    const globalViews = getGlobalVideoViews(id);
-    return {
-        views: globalViews,
-        likes: local.likes,
-        comments: local.comments
-    };
+// ==================== कमेंट्स (लोकल) ====================
+function getLocalComments(videoId) {
+    const key = `comments_${videoId}`;
+    const data = localStorage.getItem(key);
+    return data ? JSON.parse(data) : [];
 }
 
-function save(id, data) {
-    let local = {
-        likes: data.likes,
-        comments: data.comments
-    };
-    localStorage.setItem("v_" + id, JSON.stringify(local));
+function saveLocalComments(videoId, comments) {
+    const key = `comments_${videoId}`;
+    localStorage.setItem(key, JSON.stringify(comments));
 }
 
-// ==================== रेंडर फंक्शन (यथावत) ====================
+// ==================== रेंडर फंक्शन ====================
 const feed = document.getElementById("feed");
 const player = document.getElementById("player");
 const videoEl = document.getElementById("video");
@@ -1297,109 +1342,113 @@ let savedScrollPos = 0;
 
 let isRendering = false;
 function render(list = videos) {
- if (isRendering) return;
- isRendering = true;
- feed.innerHTML = "";
- loading.classList.add('active');
- setTimeout(() => {
-  list.forEach(v => {
-   const s = store(v.id);
-   const div = document.createElement("div");
-   div.className = "video-card";
-   div.innerHTML = `
-    <img src="${v.thumbnail}" class="thumbnail" onclick="openVideo(${v.id})">
-    <div class="info">
-     <img src="${v.icon}" class="channel-icon">
-     <div class="text">
-      <div class="title">${v.title}</div>
-      <div class="meta" id="vmeta-${v.id}">${v.channel} • ${s.views} views</div>
-     </div>
-    </div>`;
-   feed.appendChild(div);
-  });
-  loading.classList.remove('active');
-  isRendering = false;
- }, 500);
+    if (isRendering) return;
+    isRendering = true;
+    feed.innerHTML = "";
+    loading.classList.add('active');
+    setTimeout(() => {
+        list.forEach(v => {
+            const stats = getVideoStats(v.id);
+            const div = document.createElement("div");
+            div.className = "video-card";
+            div.innerHTML = `
+                <img src="${v.thumbnail}" class="thumbnail" onclick="openVideo(${v.id})">
+                <div class="info">
+                    <img src="${v.icon}" class="channel-icon">
+                    <div class="text">
+                        <div class="title">${v.title}</div>
+                        <div class="meta" id="vmeta-${v.id}">${v.channel} • ${stats.views} views • ❤️ ${stats.likes}</div>
+                    </div>
+                </div>`;
+            feed.appendChild(div);
+        });
+        loading.classList.remove('active');
+        isRendering = false;
+    }, 500);
 }
 
 function updateCardUI(id) {
-    const s = store(id);
+    const stats = getVideoStats(id);
     const metaEl = document.getElementById("vmeta-" + id);
     if (metaEl) {
         const v = videos.find(x => x.id === id);
-        metaEl.innerText = `${v.channel} • ${s.views} views`;
+        metaEl.innerText = `${v.channel} • ${stats.views} views • ❤️ ${stats.likes}`;
     }
 }
 
-function openVideo(id) {
- savedScrollPos = window.scrollY;
- current = videos.find(v => v.id === id);
- let s = store(current.id);
- viewsEl.innerText = s.views;
- likesEl.innerText = s.likes;
- document.getElementById("playerTitle").innerText = current.title;
- videoEl.src = current.videoUrl;
- videoEl.onplay = function() {
-   // हर बार प्ले करने पर व्यूज बढ़ाएँ (hasViewed हटा दिया गया है)
-   incrementGlobalVideoViews(current.id);
-   viewsEl.innerText = getGlobalVideoViews(current.id);
-   updateCardUI(current.id);
-   updateStatsUI(); // कुल व्यूज अपडेट करें
- };
- renderComments();
- player.style.display = "flex";
- document.body.style.overflow = "hidden";
+// ==================== प्लेयर फंक्शन ====================
+async function openVideo(id) {
+    savedScrollPos = window.scrollY;
+    current = videos.find(v => v.id === id);
+    const stats = getVideoStats(current.id);
+    viewsEl.innerText = stats.views;
+    likesEl.innerText = stats.likes;
+    document.getElementById("playerTitle").innerText = current.title;
+    videoEl.src = current.videoUrl;
+    videoEl.onplay = async function() {
+        // हर बार प्ले होने पर व्यू बढ़ाएँ
+        const newViews = await incrementVideoViews(current.id);
+        viewsEl.innerText = newViews;
+        updateCardUI(current.id);
+        updateStatsUI();
+    };
+    renderComments();
+    player.style.display = "flex";
+    document.body.style.overflow = "hidden";
 }
 
 function closePlayer() {
- videoEl.pause();
- videoEl.src = "";
- player.style.display = "none";
- document.body.style.overflow = "auto";
- window.scrollTo(0, savedScrollPos);
+    videoEl.pause();
+    videoEl.src = "";
+    player.style.display = "none";
+    document.body.style.overflow = "auto";
+    window.scrollTo(0, savedScrollPos);
 }
 
-function like() {
- let s = store(current.id);
- s.likes++;
- save(current.id, s);
- likesEl.innerText = s.likes;
+async function like() {
+    const newLikes = await incrementVideoLikes(current.id);
+    likesEl.innerText = newLikes;
+    updateCardUI(current.id);
 }
 
 function renderComments() {
- commentList.innerHTML = "";
- const comments = store(current.id).comments;
- if (comments.length === 0) { commentList.innerHTML = "<div class='comment'>No comments yet.</div>"; return; }
- comments.forEach(c => {
-  const d = document.createElement("div");
-  d.className = "comment";
-  d.innerText = c;
-  commentList.appendChild(d);
- });
+    commentList.innerHTML = "";
+    const comments = getLocalComments(current.id);
+    if (comments.length === 0) {
+        commentList.innerHTML = "<div class='comment'>No comments yet.</div>";
+        return;
+    }
+    comments.forEach(c => {
+        const d = document.createElement("div");
+        d.className = "comment";
+        d.innerText = c;
+        commentList.appendChild(d);
+    });
 }
 
 function addComment(e) {
- if (e.key === "Enter" && e.target.value.trim()) {
-  let s = store(current.id);
-  s.comments.push(e.target.value);
-  save(current.id, s);
-  e.target.value = "";
-  renderComments();
- }
+    if (e.key === "Enter" && e.target.value.trim()) {
+        const comments = getLocalComments(current.id);
+        comments.push(e.target.value);
+        saveLocalComments(current.id, comments);
+        e.target.value = "";
+        renderComments();
+    }
 }
 
+// ==================== चैनल पॉपअप ====================
 function openChannels() { document.getElementById("channelPopup").classList.add("active"); }
 function closeChannels() { document.getElementById("channelPopup").classList.remove("active"); }
 
 const channelContainer = document.getElementById("channelList");
 const uniqueChannels = [...new Set(videos.map(v => v.channel))];
 uniqueChannels.forEach(name => {
- const v = videos.find(x => x.channel === name);
- const d = document.createElement("div");
- d.className = "channel-item";
- d.innerHTML = `<img src="${v.icon}"><div>${name}</div>`;
- d.onclick = () => { render(videos.filter(x => x.channel === name)); closeChannels(); };
- channelContainer.appendChild(d);
+    const v = videos.find(x => x.channel === name);
+    const d = document.createElement("div");
+    d.className = "channel-item";
+    d.innerHTML = `<img src="${v.icon}"><div>${name}</div>`;
+    d.onclick = () => { render(videos.filter(x => x.channel === name)); closeChannels(); };
+    channelContainer.appendChild(d);
 });
 
 function showAll() { render(videos); }
@@ -1415,8 +1464,7 @@ function closeRightPanel() {
     document.getElementById('rightPanel').classList.remove('active');
 }
 
-// ==================== बटन हैंडलर (अब बाहर खुलेंगे) ====================
-// शेयर बटन
+// ==================== बटन हैंडलर ====================
 document.getElementById('shareBtn').addEventListener('click', function(e) {
     e.preventDefault();
     const shareUrl = 'https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv';
@@ -1427,21 +1475,17 @@ document.getElementById('shareBtn').addEventListener('click', function(e) {
             url: shareUrl
         }).catch(console.error);
     } else {
-        // ब्राउज़र में खोलें
         window.open(shareUrl, '_blank');
     }
-    closeRightPanel(); // पैनल बंद करें
+    closeRightPanel();
 });
 
-// प्राइवेसी पॉलिसी बटन
 document.getElementById('privacyBtn').addEventListener('click', function(e) {
     e.preventDefault();
-    // यहाँ अपनी प्राइवेसी पॉलिसी का URL डालें
     window.open('https://www.example.com/privacy', '_blank');
     closeRightPanel();
 });
 
-// रेट अस बटन
 document.getElementById('rateBtn').addEventListener('click', function(e) {
     e.preventDefault();
     window.open('https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv', '_blank');
@@ -1449,14 +1493,16 @@ document.getElementById('rateBtn').addEventListener('click', function(e) {
 });
 
 // ==================== इनिशियलाइज़ ====================
-window.addEventListener('DOMContentLoaded', () => {
-    // नए विज़िटर को ट्रैक करें
-    trackNewVisitor();
-    // वीडियो रेंडर करें
-    render(videos);
+(async function init() {
+    // ग्लोबल डेटा लोड करें
+    globalStore = await fetchGlobalStore();
+    // नए विज़िटर ट्रैक करें
+    await trackNewVisitor();
     // स्टैट्स यूआई अपडेट करें
     updateStatsUI();
-});
+    // वीडियो रेंडर करें
+    render(videos);
+})();
 </script>
 </body>
 </html>
