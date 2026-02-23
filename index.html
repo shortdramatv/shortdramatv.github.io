@@ -175,6 +175,7 @@ body.light-mode .stats-item {
     font-weight: bold;
     transition: background 0.3s;
     border: 1px solid #333;
+    cursor: pointer;
 }
 .panel-btn:hover {
     background: #2a2a2a;
@@ -330,22 +331,22 @@ video{ width:100%; max-height:55vh; }
  </div>
  <div class="right-panel-content">
     <!-- शेयर बटन (अब यहाँ) -->
-    <a href="#" class="panel-btn" id="shareBtn">
+    <div class="panel-btn" id="shareBtn">
         <i class="fas fa-share-alt"></i>
         शेयर करें
-    </a>
+    </div>
 
     <!-- प्राइवेसी पॉलिसी बटन (बिना काउंट के) -->
-    <a href="#" target="_blank" class="panel-btn" id="privacyBtn">
+    <div class="panel-btn" id="privacyBtn">
         <i class="fas fa-shield-alt"></i>
         प्राइवेसी पॉलिसी
-    </a>
+    </div>
     
     <!-- रेट अस बटन (बिना काउंट के) -->
-    <a href="#" target="_blank" class="panel-btn" id="rateBtn">
+    <div class="panel-btn" id="rateBtn">
         <i class="fas fa-star"></i>
         रेट अस
-    </a>
+    </div>
 
     <!-- नए ग्लोबल स्टैट्स -->
     <div class="stats-container">
@@ -400,6 +401,11 @@ video{ width:100%; max-height:55vh; }
 
 <script>
 // ==================== ग्लोबल डेटा स्टोर (सिमुलेशन) ====================
+// नोट: localStorage केवल एक डिवाइस पर काम करता है। 
+// सभी डिवाइस पर एक समान काउंट के लिए आपको सर्वर-साइड स्टोरेज चाहिए।
+// उदाहरण के लिए, आप JSONbin.io का उपयोग कर सकते हैं (मुफ्त)।
+// नीचे JSONbin.io का उपयोग करने का तरीका टिप्पणी में दिया गया है।
+
 const GLOBAL_STORE_KEY = 'drama_tv_global_store_v2';
 
 function getGlobalStore() {
@@ -463,7 +469,7 @@ function updateStatsUI() {
 
 // ==================== वीडियो डेटा (यथावत) ====================
 const videos = [
-
+ 
  {
   id: 104,
   title: "सीईओ को पिता का इलाज कराने के लिए गाकर पैसे कमा रही छोटी लड़की से मिला, वह उसकी अपनी जैविक बेटी है!",
@@ -1288,7 +1294,6 @@ const commentList = document.getElementById("commentList");
 const loading = document.getElementById("loading");
 let current = null;
 let savedScrollPos = 0;
-let hasViewed = {};
 
 let isRendering = false;
 function render(list = videos) {
@@ -1335,13 +1340,11 @@ function openVideo(id) {
  document.getElementById("playerTitle").innerText = current.title;
  videoEl.src = current.videoUrl;
  videoEl.onplay = function() {
-  if (!hasViewed[current.id]) {
+   // हर बार प्ले करने पर व्यूज बढ़ाएँ (hasViewed हटा दिया गया है)
    incrementGlobalVideoViews(current.id);
    viewsEl.innerText = getGlobalVideoViews(current.id);
-   hasViewed[current.id] = true;
    updateCardUI(current.id);
    updateStatsUI(); // कुल व्यूज अपडेट करें
-  }
  };
  renderComments();
  player.style.display = "flex";
@@ -1412,7 +1415,7 @@ function closeRightPanel() {
     document.getElementById('rightPanel').classList.remove('active');
 }
 
-// ==================== बटन हैंडलर ====================
+// ==================== बटन हैंडलर (अब बाहर खुलेंगे) ====================
 // शेयर बटन
 document.getElementById('shareBtn').addEventListener('click', function(e) {
     e.preventDefault();
@@ -1424,6 +1427,7 @@ document.getElementById('shareBtn').addEventListener('click', function(e) {
             url: shareUrl
         }).catch(console.error);
     } else {
+        // ब्राउज़र में खोलें
         window.open(shareUrl, '_blank');
     }
     closeRightPanel(); // पैनल बंद करें
@@ -1432,7 +1436,7 @@ document.getElementById('shareBtn').addEventListener('click', function(e) {
 // प्राइवेसी पॉलिसी बटन
 document.getElementById('privacyBtn').addEventListener('click', function(e) {
     e.preventDefault();
-    // उदाहरण URL - इसे बाद में बदल लें
+    // यहाँ अपनी प्राइवेसी पॉलिसी का URL डालें
     window.open('https://www.example.com/privacy', '_blank');
     closeRightPanel();
 });
