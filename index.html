@@ -7,11 +7,10 @@
 <!-- Font Awesome for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
-/* ==================== पुराने स्टाइल (बिल्कुल यथावत) ==================== */
+/* ==================== पुराने स्टाइल (यथावत) ==================== */
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#0f0f0f;color:#fff;transition: background 0.3s, color 0.3s}
 
-/* LIGHT MODE STYLES */
 body.light-mode {
     background:#fff;
     color:#000;
@@ -51,7 +50,6 @@ body.light-mode .stats-item {
     color: #000;
 }
 
-/* HEADER */
 .header{
  position:fixed;top:0;width:100%;
  display:flex;align-items:center;
@@ -65,7 +63,6 @@ body.light-mode .stats-item {
 .logo{font-size:22px;font-weight:bold;cursor:pointer; display: flex; align-items: center; gap: 8px;}
 .logo span{color:#ff0000}
 
-/* अपडेट बटन (लोगो के साथ) */
 .update-link {
     background: #ff0000;
     color: white;
@@ -80,7 +77,6 @@ body.light-mode .stats-item {
     background: #cc0000;
 }
 
-/* हेडर बटन्स (शेयर बटन हटा दिया गया है) */
 .header-buttons {
     margin-left: auto;
     display: flex;
@@ -102,7 +98,6 @@ body.light-mode .stats-item {
     background: rgba(255,255,255,0.1);
 }
 
-/* CHANNEL POPUP (बायाँ वाला) */
 #channelPopup{
  position:fixed;top:0;left:-100%;
  width:100%;height:100%;
@@ -133,7 +128,6 @@ body.light-mode .stats-item {
  margin-right:25px
 }
 
-/* ==================== राइट साइड पैनल (नए काउंट के साथ) ==================== */
 #rightPanel{
  position:fixed;top:0;right:-100%;
  width:100%;height:100%;
@@ -182,7 +176,6 @@ body.light-mode .stats-item {
     font-size: 24px;
 }
 
-/* नए स्टैट्स सेक्शन */
 .stats-container {
     margin-top: 20px;
     border-top: 2px solid #333;
@@ -220,20 +213,17 @@ body.light-mode .stats-item {
     color: #fff;
 }
 
-/* MAIN CONTAINER */
 .main-container {
  margin-top: 70px;
  padding: 0;
 }
 
-/* VIDEO FEED */
 .video-feed {
  display: grid;
  grid-template-columns: 1fr;
  gap: 15px;
 }
 
-/* MOBILE (डिफॉल्ट) */
 @media (max-width: 767px) {
  .video-feed {
   grid-template-columns: 1fr;
@@ -245,19 +235,16 @@ body.light-mode .stats-item {
  .thumbnail { border-radius: 0; }
 }
 
-/* TABLET */
 @media (min-width: 768px) and (max-width: 1023px) {
  .video-feed { grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 12px; }
  .main-container { padding: 12px; }
 }
 
-/* DESKTOP */
 @media (min-width: 1024px) {
  .video-feed { grid-template-columns: repeat(4, 1fr); gap: 15px; max-width: 1200px; margin: 0 auto; padding: 15px; }
  .main-container { padding: 15px; max-width: 1200px; margin: 0 auto; }
 }
 
-/* VIDEO CARD */
 .video-card {
  background-color: #1a1a1a;
  border-radius: 8px;
@@ -279,18 +266,18 @@ body.light-mode .stats-item {
 .title{ font-size:14px; font-weight:500; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; line-height:1.3; min-height: 2.4em; }
 .meta{ font-size:11px; color:#aaa; }
 
-/* PLAYER */
 #player{ position:fixed; inset:0; background:#000; display:none; flex-direction:column; z-index:3000 }
 .player-header{ display:flex; align-items:center; padding:12px; background:#000; }
 .back-btn{ font-size:24px; background:none; border:none; color:#fff; margin-right:10px; cursor:pointer; }
 video{ width:100%; max-height:55vh; }
 .actions{ display:flex; justify-content:space-around; padding:10px; border-top:1px solid #222; }
 .actions button{ background:none; border:none; color:#fff; cursor:pointer; }
-.comments{ padding:10px; border-top:1px solid #222; }
-.comments input{ width:100%; padding:10px; background:#222; border:none; color:#fff; border-radius:6px; }
-.comment{ font-size:13px; margin-top:8px; color:#ccc; }
+.comments{ padding:10px; border-top:1px solid #222; max-height: 200px; overflow-y: auto; }
+.comments input{ width:100%; padding:10px; background:#222; border:none; color:#fff; border-radius:6px; margin-bottom:10px; }
+.comment{ font-size:13px; margin-top:8px; color:#ccc; display: flex; align-items: center; justify-content: space-between; }
+.comment-text { flex:1; }
+.delete-btn { background:none; border:none; color:#ff5555; cursor:pointer; margin-left:10px; font-size:14px; }
 
-/* LOADING */
 .loading { text-align: center; padding: 40px; color: #aaa; font-size: 18px; display: none; }
 .loading.active { display: block; }
 </style>
@@ -301,18 +288,14 @@ video{ width:100%; max-height:55vh; }
 <button class="menu-btn" onclick="openChannels()">☰</button>
 <div class="logo" onclick="showAll()">
     Drama <span>TV</span>
-    <!-- अपडेट लिंक (सीधा प्ले स्टोर) -->
     <a href="https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv" target="_blank" class="update-link">अपडेट</a>
 </div>
 <div class="header-buttons">
-    <!-- शेयर बटन हटा दिया गया है -->
     <button class="refresh-btn" onclick="refreshHome()"><i class="fas fa-sync-alt"></i></button>
-    <!-- राइट साइड पैनल बटन (तीन डॉट्स) -->
     <button class="more-btn" onclick="toggleRightPanel()"><i class="fas fa-ellipsis-vertical"></i></button>
 </div>
 </header>
 
-<!-- बायाँ चैनल पैनल (यथावत) -->
 <div id="channelPopup">
  <div class="popup-header">
   <button onclick="closeChannels()">←</button>
@@ -321,37 +304,29 @@ video{ width:100%; max-height:55vh; }
  <div id="channelList"></div>
 </div>
 
-<!-- ==================== नया दायाँ पैनल (शेयर + प्राइवेसी + रेट + स्टैट्स) ==================== -->
 <div id="rightPanel">
  <div class="right-panel-header">
   <div>मेनू</div>
   <button onclick="closeRightPanel()"><i class="fas fa-times"></i></button>
  </div>
  <div class="right-panel-content">
-    <!-- शेयर बटन (अब यहाँ) -->
     <div class="panel-btn" id="shareBtn">
         <i class="fas fa-share-alt"></i>
         शेयर करें
     </div>
-
-    <!-- प्राइवेसी पॉलिसी बटन (बिना काउंट के) -->
     <div class="panel-btn" id="privacyBtn">
         <i class="fas fa-shield-alt"></i>
         प्राइवेसी पॉलिसी
     </div>
-    
-    <!-- रेट अस बटन (बिना काउंट के) -->
     <div class="panel-btn" id="rateBtn">
         <i class="fas fa-star"></i>
         रेट अस
     </div>
-
-    <!-- नए ग्लोबल स्टैट्स -->
     <div class="stats-container">
         <div class="stats-item">
             <div class="stats-icon"><i class="fas fa-users"></i></div>
             <div class="stats-info">
-                <div class="stats-label">कुल विज़िटर (नई डिवाइस)</div>
+                <div class="stats-label">कुल विज़िटर (अलग-अलग डिवाइस)</div>
                 <div class="stats-value" id="totalVisitors">0</div>
             </div>
         </div>
@@ -383,16 +358,13 @@ video{ width:100%; max-height:55vh; }
   <button class="back-btn" onclick="closePlayer()">⛌</button>
   <div id="playerTitle"></div>
  </div>
-
  <video id="video" controls autoplay playsinline controlsList="nodownload" disablePictureInPicture oncontextmenu="return false"></video>
-
  <div class="actions">
   <button onclick="like()">💛 <span id="likes">0</span></button>
   <div>👁️ <span id="views">0</span></div>
  </div>
-
  <div class="comments">
-  <input placeholder="Add a comment…" onkeydown="addComment(event)">
+  <input placeholder="Add a comment…" id="commentInput" onkeydown="addComment(event)">
   <div id="commentList"></div>
  </div>
 </div>
@@ -400,16 +372,23 @@ video{ width:100%; max-height:55vh; }
 <script>
 // ==================== JSONBin.io कॉन्फ़िगरेशन ====================
 // नीचे दिए गए placeholder को अपनी Bin ID और Master Key से बदलें
-const BIN_ID = "699c279243b1c97be9962290";         // यहाँ अपनी Bin ID डालें (जैसे "65a1b2c3d4e5f67890a1b2c3")
-const MASTER_KEY = "$2a$10$26UQhsrzPhnqX5zEOkjGpuHaJ6zhnbVABPrFCaTYA0RZxYJcycjj."; // यहाँ अपनी Master Key डालें (जैसे "$2b$10$abcdefghijklmnopqrstuvwx")
+const BIN_ID = "699c3337ae596e708f420880";         // यहाँ अपनी Bin ID डालें
+const MASTER_KEY = "$2a$10$26UQhsrzPhnqX5zEOkjGpuHaJ6zhnbVABPrFCaTYA0RZxYJcycjj."; // यहाँ अपनी Master Key डालें
 const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
-// ==================== ग्लोबल डेटा कैश ====================
+// ==================== ग्लोबल डेटा स्ट्रक्चर ====================
 let globalStore = {
-    visitors: 0,
-    deviceTracked: {},
-    videoStats: {}   // { videoId: { views: 0, likes: 0 } }
+    deviceTracked: {},  // { deviceId: true }
+    videoStats: {},     // { videoId: { views: 0, likes: 0 } }
+    comments: {}        // { videoId: [ { id, deviceId, text, timestamp } ] }
 };
+
+// डिवाइस आईडी (लोकल स्टोरेज से लोड करें या नया बनाएँ)
+let deviceId = localStorage.getItem('device_id');
+if (!deviceId) {
+    deviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+    localStorage.setItem('device_id', deviceId);
+}
 
 // ==================== JSONBin.io हेल्पर फंक्शन ====================
 async function fetchGlobalStore() {
@@ -423,27 +402,17 @@ async function fetchGlobalStore() {
         });
         if (!response.ok) throw new Error('Network error');
         const data = await response.json();
-        // सुनिश्चित करें कि data में सही प्रॉपर्टीज हैं
+        // सुनिश्चित करें कि सभी आवश्यक फील्ड मौजूद हैं
         if (!data || typeof data !== 'object') {
-            return { visitors: 0, deviceTracked: {}, videoStats: {} };
+            return { deviceTracked: {}, videoStats: {}, comments: {} };
         }
-        // पुराने डेटा फॉर्मेट को अपग्रेड करें (अगर जरूरत हो)
-        if (data.videoViews && !data.videoStats) {
-            // पुराने फॉर्मेट को नए में बदलें
-            const videoStats = {};
-            for (let id in data.videoViews) {
-                videoStats[id] = { views: data.videoViews[id], likes: 0 };
-            }
-            data.videoStats = videoStats;
-            delete data.videoViews;
-        }
-        if (!data.videoStats) data.videoStats = {};
         if (!data.deviceTracked) data.deviceTracked = {};
-        if (!data.visitors) data.visitors = 0;
+        if (!data.videoStats) data.videoStats = {};
+        if (!data.comments) data.comments = {};
         return data;
     } catch (error) {
         console.error("Error fetching global store:", error);
-        return { visitors: 0, deviceTracked: {}, videoStats: {} };
+        return { deviceTracked: {}, videoStats: {}, comments: {} };
     }
 }
 
@@ -457,7 +426,6 @@ async function saveGlobalStore(newStore) {
             },
             body: JSON.stringify(newStore)
         });
-        // कैश अपडेट करें
         globalStore = newStore;
     } catch (error) {
         console.error("Error saving global store:", error);
@@ -465,23 +433,16 @@ async function saveGlobalStore(newStore) {
 }
 
 // ==================== विज़िटर ट्रैकिंग ====================
-async function trackNewVisitor() {
-    const deviceId = localStorage.getItem('device_id');
-    if (!deviceId) {
-        const newDeviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substring(2);
-        localStorage.setItem('device_id', newDeviceId);
-        globalStore.deviceTracked[newDeviceId] = true;
-        globalStore.visitors += 1;
-        await saveGlobalStore(globalStore);
-    } else if (!globalStore.deviceTracked[deviceId]) {
+async function trackVisitor() {
+    if (!globalStore.deviceTracked[deviceId]) {
         globalStore.deviceTracked[deviceId] = true;
-        globalStore.visitors += 1;
         await saveGlobalStore(globalStore);
     }
-    return globalStore.visitors;
+    // विज़िटर काउंट = deviceTracked ऑब्जेक्ट की लंबाई
+    return Object.keys(globalStore.deviceTracked).length;
 }
 
-// ==================== वीडियो स्टैट्स (ग्लोबल) ====================
+// ==================== वीडियो स्टैट्स ====================
 function getVideoStats(videoId) {
     if (!globalStore.videoStats[videoId]) {
         globalStore.videoStats[videoId] = { views: 0, likes: 0 };
@@ -503,7 +464,36 @@ async function incrementVideoLikes(videoId) {
     return stats.likes;
 }
 
-// ==================== कुल व्यूज (सभी वीडियो) ====================
+// ==================== कमेंट्स (ग्लोबल) ====================
+function getComments(videoId) {
+    if (!globalStore.comments[videoId]) {
+        globalStore.comments[videoId] = [];
+    }
+    return globalStore.comments[videoId];
+}
+
+async function addGlobalComment(videoId, text) {
+    const comments = getComments(videoId);
+    const newComment = {
+        id: Date.now() + '_' + Math.random().toString(36).substring(2, 7),
+        deviceId: deviceId,
+        text: text,
+        timestamp: Date.now()
+    };
+    comments.push(newComment);
+    await saveGlobalStore(globalStore);
+    return comments;
+}
+
+async function deleteGlobalComment(videoId, commentId) {
+    const comments = getComments(videoId);
+    const updatedComments = comments.filter(c => c.id !== commentId);
+    globalStore.comments[videoId] = updatedComments;
+    await saveGlobalStore(globalStore);
+    return updatedComments;
+}
+
+// ==================== कुल व्यूज ====================
 function getTotalViews() {
     let total = 0;
     for (let id in globalStore.videoStats) {
@@ -514,14 +504,14 @@ function getTotalViews() {
 
 // ==================== यूआई अपडेट ====================
 function updateStatsUI() {
-    document.getElementById('totalVisitors').innerText = globalStore.visitors || 0;
+    document.getElementById('totalVisitors').innerText = Object.keys(globalStore.deviceTracked).length;
     document.getElementById('totalViews').innerText = getTotalViews();
     document.getElementById('totalVideos').innerText = videos.length;
 }
 
 // ==================== वीडियो डेटा (यथावत) ====================
 const videos = [
-
+ 
  {
   id: 104,
   title: "सीईओ को पिता का इलाज कराने के लिए गाकर पैसे कमा रही छोटी लड़की से मिला, वह उसकी अपनी जैविक बेटी है!",
@@ -1317,18 +1307,6 @@ const videos = [
  },
 ];
 
-// ==================== कमेंट्स (लोकल) ====================
-function getLocalComments(videoId) {
-    const key = `comments_${videoId}`;
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : [];
-}
-
-function saveLocalComments(videoId, comments) {
-    const key = `comments_${videoId}`;
-    localStorage.setItem(key, JSON.stringify(comments));
-}
-
 // ==================== रेंडर फंक्शन ====================
 const feed = document.getElementById("feed");
 const player = document.getElementById("player");
@@ -1336,6 +1314,7 @@ const videoEl = document.getElementById("video");
 const viewsEl = document.getElementById("views");
 const likesEl = document.getElementById("likes");
 const commentList = document.getElementById("commentList");
+const commentInput = document.getElementById("commentInput");
 const loading = document.getElementById("loading");
 let current = null;
 let savedScrollPos = 0;
@@ -1386,13 +1365,12 @@ async function openVideo(id) {
     document.getElementById("playerTitle").innerText = current.title;
     videoEl.src = current.videoUrl;
     videoEl.onplay = async function() {
-        // हर बार प्ले होने पर व्यू बढ़ाएँ
         const newViews = await incrementVideoViews(current.id);
         viewsEl.innerText = newViews;
         updateCardUI(current.id);
         updateStatsUI();
     };
-    renderComments();
+    await renderComments();
     player.style.display = "flex";
     document.body.style.overflow = "hidden";
 }
@@ -1411,28 +1389,39 @@ async function like() {
     updateCardUI(current.id);
 }
 
-function renderComments() {
+// ==================== कमेंट्स रेंडर ====================
+async function renderComments() {
     commentList.innerHTML = "";
-    const comments = getLocalComments(current.id);
+    const comments = getComments(current.id);
     if (comments.length === 0) {
         commentList.innerHTML = "<div class='comment'>No comments yet.</div>";
         return;
     }
-    comments.forEach(c => {
-        const d = document.createElement("div");
-        d.className = "comment";
-        d.innerText = c;
-        commentList.appendChild(d);
+    // नए से पुराने क्रम में दिखाने के लिए reverse
+    comments.slice().reverse().forEach(c => {
+        const div = document.createElement("div");
+        div.className = "comment";
+        div.innerHTML = `
+            <span class="comment-text">${c.text}</span>
+            ${c.deviceId === deviceId ? '<button class="delete-btn" onclick="deleteComment(\'' + c.id + '\')"><i class="fas fa-trash"></i></button>' : ''}
+        `;
+        commentList.appendChild(div);
     });
 }
 
-function addComment(e) {
+async function addComment(e) {
     if (e.key === "Enter" && e.target.value.trim()) {
-        const comments = getLocalComments(current.id);
-        comments.push(e.target.value);
-        saveLocalComments(current.id, comments);
+        const text = e.target.value.trim();
+        await addGlobalComment(current.id, text);
         e.target.value = "";
-        renderComments();
+        await renderComments();
+    }
+}
+
+async function deleteComment(commentId) {
+    if (confirm("क्या आप अपना कमेंट डिलीट करना चाहते हैं?")) {
+        await deleteGlobalComment(current.id, commentId);
+        await renderComments();
     }
 }
 
@@ -1454,7 +1443,7 @@ uniqueChannels.forEach(name => {
 function showAll() { render(videos); }
 function refreshHome() { location.reload(); }
 
-// ==================== राइट पैनल फंक्शन ====================
+// ==================== राइट पैनल ====================
 function toggleRightPanel() {
     const panel = document.getElementById('rightPanel');
     panel.classList.toggle('active');
@@ -1494,13 +1483,9 @@ document.getElementById('rateBtn').addEventListener('click', function(e) {
 
 // ==================== इनिशियलाइज़ ====================
 (async function init() {
-    // ग्लोबल डेटा लोड करें
     globalStore = await fetchGlobalStore();
-    // नए विज़िटर ट्रैक करें
-    await trackNewVisitor();
-    // स्टैट्स यूआई अपडेट करें
+    await trackVisitor();  // यह सुनिश्चित करेगा कि डिवाइस ट्रैक हो और विज़िटर काउंट अपडेट हो
     updateStatsUI();
-    // वीडियो रेंडर करें
     render(videos);
 })();
 </script>
