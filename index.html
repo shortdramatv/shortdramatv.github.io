@@ -443,12 +443,10 @@ video{ width:100%; max-height:55vh; }
 <header class="header">
 <button class="menu-btn" onclick="openChannels()">☰</button>
 <div class="logo" onclick="showAll()">
-    Drama<span>TV</span>
-    
+    Drama <span>TV</span>
     
     <!-- Update link (Play Store) -->
     <!-- <a href="https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv" target="_blank" class="update-link">UPDATE</a> -->
-    
     
 </div>
 <div class="header-buttons">
@@ -573,11 +571,28 @@ video{ width:100%; max-height:55vh; }
  </div>
 </div>
 
+<!-- ==================== FIREBASE SDK ==================== -->
+<!-- Add Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
 <script>
-// ==================== JSONBin.io CONFIGURATION ====================
-const BIN_ID = "699c9b56ae596e708f42fc48";
-const MASTER_KEY = "$2a$10$26UQhsrzPhnqX5zEOkjGpuHaJ6zhnbVABPrFCaTYA0RZxYJcycjj.";
-const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+// ==================== FIREBASE CONFIGURATION ====================
+// 🔴🔴🔴 अपने Firebase प्रोजेक्ट का कॉन्फ़िगरेशन यहाँ डालें 🔴🔴🔴
+const firebaseConfig = {
+  apiKey: "AIzaSyBUzs-C8M5-I316az0d_UfLK8OOoWrkA6Q",
+  authDomain: "dramatv-f4284.firebaseapp.com",
+  databaseURL: "https://dramatv-f4284-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "dramatv-f4284",
+  storageBucket: "dramatv-f4284.firebasestorage.app",
+  messagingSenderId: "486451162756",
+  appId: "1:486451162756:web:496bc6b5c01db5aca2dcd1"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+const globalStoreRef = database.ref('dramaTVStore');
 
 // ==================== GLOBAL DATA CACHE ====================
 let globalStore = {
@@ -586,18 +601,18 @@ let globalStore = {
     videoStats: {}   // { videoId: { views: 0, likes: 0, comments: [] } }
 };
 
-// ==================== HELPER FUNCTIONS ====================
+// ==================== FIREBASE HELPER FUNCTIONS ====================
 async function fetchGlobalStore() {
     try {
-        const response = await fetch(API_URL, {
-            method: 'GET',
-            headers: {
-                'X-Master-Key': MASTER_KEY,
-                'X-Bin-Meta': 'false'
-            }
-        });
-        if (!response.ok) throw new Error('Network error');
-        const data = await response.json();
+        const snapshot = await globalStoreRef.once('value');
+        const data = snapshot.val();
+        
+        if (!data) {
+            // Initialize with default structure
+            const defaultData = { visitors: 0, deviceTracked: {}, videoStats: {} };
+            await globalStoreRef.set(defaultData);
+            return defaultData;
+        }
         
         // Ensure data has correct structure
         return {
@@ -606,28 +621,48 @@ async function fetchGlobalStore() {
             videoStats: data.videoStats || {}
         };
     } catch (error) {
-        console.warn("Error fetching from JSONBin, using defaults:", error);
+        console.warn("Error fetching from Firebase, using defaults:", error);
         return { visitors: 0, deviceTracked: {}, videoStats: {} };
     }
 }
 
 async function saveGlobalStore(newData) {
     try {
-        await fetch(API_URL, {
-            method: 'PUT',
-            headers: {
-                'X-Master-Key': MASTER_KEY,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newData)
-        });
+        await globalStoreRef.set(newData);
         globalStore = newData;
+        return true;
     } catch (error) {
-        console.warn("Error saving to JSONBin:", error);
+        console.warn("Error saving to Firebase:", error);
         // Still update local cache
         globalStore = newData;
+        return false;
     }
 }
+
+// Listen for realtime updates from Firebase
+globalStoreRef.on('value', (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+        globalStore = {
+            visitors: data.visitors || 0,
+            deviceTracked: data.deviceTracked || {},
+            videoStats: data.videoStats || {}
+        };
+        // Update UI if stats are visible
+        updateStatsUI();
+        // Update current video card if video is open
+        if (current) {
+            const stats = getVideoStats(current.id);
+            viewsEl.innerText = stats.views;
+            likesEl.innerText = stats.likes;
+            updateCardUI(current.id);
+        }
+        // Re-render comments if video is open
+        if (current && player.style.display === 'flex') {
+            renderComments();
+        }
+    }
+});
 
 // ==================== VISITOR TRACKING ====================
 async function trackNewVisitor() {
@@ -1588,7 +1623,7 @@ function updateCardUI(id) {
     }
 }
 
-// ==================== PLAYER FUNCTIONS (FIXED: NOW COUNTS EVERY PLAY) ====================
+// ==================== PLAYER FUNCTIONS ====================
 async function openVideo(id) {
     savedScrollPos = window.scrollY;
     current = videos.find(v => v.id === id);
@@ -1598,7 +1633,7 @@ async function openVideo(id) {
     document.getElementById("playerTitle").innerText = current.title;
     videoEl.src = current.videoUrl;
     
-    // हर बार प्ले होने पर व्यू बढ़ेगा - no restriction
+    // हर बार प्ले होने पर व्यू बढ़ेगा
     videoEl.onplay = async function() {
         const newViews = await incrementVideoViews(current.id);
         viewsEl.innerText = newViews;
@@ -1695,7 +1730,7 @@ sharePopup.addEventListener('click', (e) => {
 });
 
 const appShareUrl = encodeURIComponent('https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv');
-const shareText = encodeURIComponent('Drama TV - Best short drama App download now!');
+const shareText = encodeURIComponent('Drama TV - Best short drama videos download now!');
 
 document.getElementById('shareWhatsApp').addEventListener('click', () => {
     window.open(`https://wa.me/?text=${shareText}%20${appShareUrl}`, '_blank');
