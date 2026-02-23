@@ -441,9 +441,13 @@ video{ width:100%; max-height:55vh; }
 <header class="header">
 <button class="menu-btn" onclick="openChannels()">☰</button>
 <div class="logo" onclick="showAll()">
-    Drama <span>TV</span>
+    Drama<span>TV</span>
+    
+    
     <!-- Update link (Play Store) -->
-    <a href="https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv" target="_blank" class="update-link">UPDATE</a>
+    <!-- <a href="https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv" target="_blank" class="update-link">UPDATE</a> -->
+    
+    
 </div>
 <div class="header-buttons">
     <button class="refresh-btn" onclick="refreshHome()"><i class="fas fa-sync-alt"></i></button>
@@ -1689,7 +1693,7 @@ sharePopup.addEventListener('click', (e) => {
 });
 
 const appShareUrl = encodeURIComponent('https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv');
-const shareText = encodeURIComponent('Drama TV - Best short drama videos download now!');
+const shareText = encodeURIComponent('Drama TV - Best short drama App download now!');
 
 document.getElementById('shareWhatsApp').addEventListener('click', () => {
     window.open(`https://wa.me/?text=${shareText}%20${appShareUrl}`, '_blank');
