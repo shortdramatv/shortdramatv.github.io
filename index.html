@@ -51,8 +51,7 @@ body.light-mode .stats-item {
     color: #000;
 }
 
-body.light-mode .delete-popup-content,
-body.light-mode .share-popup-content {
+body.light-mode .delete-popup-content {
     background: #f0f0f0;
     color: #000;
     border: 1px solid #ccc;
@@ -87,7 +86,7 @@ body.light-mode .share-popup-content {
     background: #cc0000;
 }
 
-/* हेडर बटन्स */
+/* हेडर बटन्स (शेयर बटन हटा दिया गया है) */
 .header-buttons {
     margin-left: auto;
     display: flex;
@@ -361,79 +360,6 @@ video{ width:100%; max-height:55vh; }
 .popup-btn.no:hover {
     background: #666;
 }
-
-/* ==================== शेयर पॉपअप ==================== */
-.share-popup {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 5001;
-    justify-content: center;
-    align-items: center;
-}
-.share-popup.active {
-    display: flex;
-}
-.share-popup-content {
-    background: #2a2a2a;
-    padding: 25px;
-    border-radius: 20px;
-    text-align: center;
-    max-width: 350px;
-    width: 90%;
-    border: 2px solid #ffaa00;
-}
-.share-popup-content h3 {
-    margin-bottom: 20px;
-    color: #ffaa00;
-}
-.share-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-.share-btn-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-    cursor: pointer;
-    background: #1a1a1a;
-    padding: 10px;
-    border-radius: 12px;
-    width: 70px;
-    transition: 0.2s;
-}
-.share-btn-item:hover {
-    background: #333;
-    transform: scale(1.05);
-}
-.share-btn-item i {
-    font-size: 30px;
-}
-.share-btn-item span {
-    font-size: 12px;
-    color: #ddd;
-}
-.close-share {
-    background: #444;
-    color: white;
-    border: none;
-    padding: 8px 25px;
-    border-radius: 25px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.close-share:hover {
-    background: #666;
-}
 </style>
 </head>
 <body>
@@ -453,7 +379,7 @@ video{ width:100%; max-height:55vh; }
 </div>
 </header>
 
-<!-- बायाँ चैनल पैनल -->
+<!-- बायाँ चैनल पैनल (यथावत) -->
 <div id="channelPopup">
  <div class="popup-header">
   <button onclick="closeChannels()">←</button>
@@ -469,7 +395,7 @@ video{ width:100%; max-height:55vh; }
   <button onclick="closeRightPanel()"><i class="fas fa-times"></i></button>
  </div>
  <div class="right-panel-content">
-    <!-- शेयर बटन (अब पॉपअप खोलेगा) -->
+    <!-- शेयर बटन -->
     <div class="panel-btn" id="shareBtn">
         <i class="fas fa-share-alt"></i>
         शेयर करें
@@ -481,7 +407,7 @@ video{ width:100%; max-height:55vh; }
         प्राइवेसी पॉलिसी
     </div>
     
-    <!-- रेट अस बटन (अब प्ले स्टोर खोलेगा) -->
+    <!-- रेट अस बटन -->
     <div class="panel-btn" id="rateBtn">
         <i class="fas fa-star"></i>
         रेट अस
@@ -514,7 +440,7 @@ video{ width:100%; max-height:55vh; }
  </div>
 </div>
 
-<!-- कस्टम डिलीट पॉपअप -->
+<!-- ==================== कस्टम डिलीट पॉपअप ==================== -->
 <div id="deletePopup" class="delete-popup">
     <div class="delete-popup-content">
         <p>आप अपना कमेंट डिलीट करना चाहते हैं?</p>
@@ -522,37 +448,6 @@ video{ width:100%; max-height:55vh; }
             <button class="popup-btn yes" id="confirmDeleteBtn">हाँ</button>
             <button class="popup-btn no" id="cancelDeleteBtn">नहीं</button>
         </div>
-    </div>
-</div>
-
-<!-- नया शेयर पॉपअप -->
-<div id="sharePopup" class="share-popup">
-    <div class="share-popup-content">
-        <h3>शेयर करें</h3>
-        <div class="share-buttons">
-            <!-- WhatsApp -->
-            <div class="share-btn-item" id="shareWhatsApp">
-                <i class="fab fa-whatsapp" style="color:#25D366;"></i>
-                <span>WhatsApp</span>
-            </div>
-            <!-- Facebook -->
-            <div class="share-btn-item" id="shareFacebook">
-                <i class="fab fa-facebook" style="color:#1877F2;"></i>
-                <span>Facebook</span>
-            </div>
-            <!-- Telegram -->
-            <div class="share-btn-item" id="shareTelegram">
-                <i class="fab fa-telegram" style="color:#0088cc;"></i>
-                <span>Telegram</span>
-            </div>
-            <!-- Twitter -->
-            <div class="share-btn-item" id="shareTwitter">
-                <i class="fab fa-twitter" style="color:#1DA1F2;"></i>
-                <span>Twitter</span>
-            </div>
-            <!-- आप और प्लेटफॉर्म जोड़ सकते हैं -->
-        </div>
-        <button class="close-share" id="closeShareBtn">बंद करें</button>
     </div>
 </div>
 
@@ -582,9 +477,8 @@ video{ width:100%; max-height:55vh; }
 
 <script>
 // ==================== JSONBin.io कॉन्फ़िगरेशन ====================
-// नीचे दिए गए placeholder को अपनी Bin ID और Master Key से बदलें
-const BIN_ID = "699c3337ae596e708f420880";         // यहाँ अपनी Bin ID डालें
-const MASTER_KEY = "$2a$10$26UQhsrzPhnqX5zEOkjGpuHaJ6zhnbVABPrFCaTYA0RZxYJcycjj."; // यहाँ अपनी Master Key डालें
+const BIN_ID = "699c3337ae596e708f420880";
+const MASTER_KEY = "$2a$10$26UQhsrzPhnqX5zEOkjGpuHaJ6zhnbVABPrFCaTYA0RZxYJcycjj.";
 const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
 // ==================== ग्लोबल डेटा कैश ====================
@@ -606,6 +500,7 @@ async function fetchGlobalStore() {
         });
         if (!response.ok) throw new Error('Network error');
         const data = await response.json();
+        // सुनिश्चित करें कि data में सही प्रॉपर्टीज हैं
         if (!data || typeof data !== 'object') {
             return { visitors: 0, deviceTracked: {}, videoStats: {} };
         }
@@ -629,6 +524,7 @@ async function saveGlobalStore(newStore) {
             },
             body: JSON.stringify(newStore)
         });
+        // कैश अपडेट करें
         globalStore = newStore;
     } catch (error) {
         console.error("Error saving global store:", error);
@@ -682,6 +578,7 @@ function getVideoComments(videoId) {
 async function addVideoComment(videoId, commentText) {
     const stats = getVideoStats(videoId);
     if (!stats.comments) stats.comments = [];
+    // हर कमेंट को एक यूनिक आईडी दें ताकि डिलीट कर सकें
     const newComment = {
         id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
         text: commentText,
@@ -701,7 +598,7 @@ async function deleteVideoComment(videoId, commentId) {
     return stats.comments;
 }
 
-// ==================== कुल व्यूज ====================
+// ==================== कुल व्यूज (सभी वीडियो) ====================
 function getTotalViews() {
     let total = 0;
     for (let id in globalStore.videoStats) {
@@ -1525,7 +1422,7 @@ const commentList = document.getElementById("commentList");
 const loading = document.getElementById("loading");
 let current = null;
 let savedScrollPos = 0;
-let pendingDelete = { commentId: null, videoId: null };
+let pendingDelete = { commentId: null, videoId: null }; // डिलीट पॉपअप के लिए
 
 let isRendering = false;
 function render(list = videos) {
@@ -1597,7 +1494,7 @@ async function like() {
     updateCardUI(current.id);
 }
 
-// ==================== कमेंट्स ====================
+// ==================== कमेंट्स (ग्लोबल) ====================
 function renderComments() {
     commentList.innerHTML = "";
     const comments = getVideoComments(current.id);
@@ -1646,52 +1543,9 @@ async function confirmDelete() {
     }
 }
 
-// ==================== नया शेयर पॉपअप ====================
-const sharePopup = document.getElementById('sharePopup');
-const shareBtn = document.getElementById('shareBtn');
-const closeShareBtn = document.getElementById('closeShareBtn');
-
-// शेयर पॉपअप खोलें
-shareBtn.addEventListener('click', () => {
-    sharePopup.classList.add('active');
-    closeRightPanel(); // राइट पैनल बंद करें
-});
-
-// शेयर पॉपअप बंद करें
-closeShareBtn.addEventListener('click', () => {
-    sharePopup.classList.remove('active');
-});
-
-// बैकग्राउंड पर क्लिक करें तो बंद करें (optional)
-sharePopup.addEventListener('click', (e) => {
-    if (e.target === sharePopup) {
-        sharePopup.classList.remove('active');
-    }
-});
-
-// शेयर बटन फंक्शन
-const appShareUrl = encodeURIComponent('https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv');
-const shareText = encodeURIComponent('Drama TV - बेहतरीन शॉर्ट ड्रामा वीडियो डाउनलोड करें!');
-
-document.getElementById('shareWhatsApp').addEventListener('click', () => {
-    window.open(`https://wa.me/?text=${shareText}%20${appShareUrl}`, '_blank');
-    sharePopup.classList.remove('active');
-});
-
-document.getElementById('shareFacebook').addEventListener('click', () => {
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${appShareUrl}`, '_blank');
-    sharePopup.classList.remove('active');
-});
-
-document.getElementById('shareTelegram').addEventListener('click', () => {
-    window.open(`https://t.me/share/url?url=${appShareUrl}&text=${shareText}`, '_blank');
-    sharePopup.classList.remove('active');
-});
-
-document.getElementById('shareTwitter').addEventListener('click', () => {
-    window.open(`https://twitter.com/intent/tweet?url=${appShareUrl}&text=${shareText}`, '_blank');
-    sharePopup.classList.remove('active');
-});
+// पॉपअप बटन इवेंट
+document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
+document.getElementById('cancelDeleteBtn').addEventListener('click', hideDeletePopup);
 
 // ==================== चैनल पॉपअप ====================
 function openChannels() { document.getElementById("channelPopup").classList.add("active"); }
@@ -1722,28 +1576,42 @@ function closeRightPanel() {
 }
 
 // ==================== बटन हैंडलर ====================
+document.getElementById('shareBtn').addEventListener('click', function(e) {
+    e.preventDefault();
+    const shareUrl = 'https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv';
+    if (navigator.share) {
+        navigator.share({
+            title: 'Drama TV',
+            text: 'Check out this amazing Drama TV app!',
+            url: shareUrl
+        }).catch(console.error);
+    } else {
+        window.open(shareUrl, '_blank');
+    }
+    closeRightPanel();
+});
+
 document.getElementById('privacyBtn').addEventListener('click', function(e) {
     e.preventDefault();
     window.open('https://www.example.com/privacy', '_blank');
     closeRightPanel();
 });
 
-// रेट बटन (अब प्ले स्टोर खोलेगा)
 document.getElementById('rateBtn').addEventListener('click', function(e) {
     e.preventDefault();
     window.open('https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv', '_blank');
     closeRightPanel();
 });
 
-// कन्फर्म डिलीट
-document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
-document.getElementById('cancelDeleteBtn').addEventListener('click', hideDeletePopup);
-
 // ==================== इनिशियलाइज़ ====================
 (async function init() {
+    // ग्लोबल डेटा लोड करें
     globalStore = await fetchGlobalStore();
+    // नए विज़िटर ट्रैक करें
     await trackNewVisitor();
+    // स्टैट्स यूआई अपडेट करें
     updateStatsUI();
+    // वीडियो रेंडर करें
     render(videos);
 })();
 </script>
