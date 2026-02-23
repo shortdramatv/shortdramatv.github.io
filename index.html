@@ -581,45 +581,78 @@ let globalStore = {
     videoStats: {},   // { videoId: { views: 0, likes: 0, comments: [] } }
 };
 
-// ==================== JSONBin.io HELPER FUNCTIONS ====================
-async function fetchGlobalStore() {
+// ==================== FIXED: ATOMIC READ-WRITE WITH VERSION CONTROL ====================
+async function fetchGlobalStoreWithVersion() {
     try {
         const response = await fetch(API_URL, {
             method: 'GET',
             headers: {
                 'X-Master-Key': MASTER_KEY,
-                'X-Bin-Meta': 'false',
             }
         });
         if (!response.ok) throw new Error('Network error');
+        const version = response.headers.get('X-Version');
         const data = await response.json();
-        if (!data || typeof data !== 'object') {
-            return { visitors: 0, deviceTracked: {}, videoStats: {} };
-        }
-        if (!data.videoStats) data.videoStats = {};
-        if (!data.deviceTracked) data.deviceTracked = {};
-        if (!data.visitors) data.visitors = 0;
-        return data;
+        
+        // Ensure data has correct structure
+        const safeData = {
+            visitors: data.visitors || 0,
+            deviceTracked: data.deviceTracked || {},
+            videoStats: data.videoStats || {}
+        };
+        return { data: safeData, version };
     } catch (error) {
-        console.error("Error fetching global store:", error);
-        return { visitors: 0, deviceTracked: {}, videoStats: {} };
+        console.warn("Error fetching from JSONBin, using local defaults:", error);
+        // Return default data if fetch fails
+        return { 
+            data: { visitors: 0, deviceTracked: {}, videoStats: {} }, 
+            version: null 
+        };
     }
 }
 
-async function saveGlobalStore(newStore) {
-    try {
-        await fetch(API_URL, {
-            method: 'PUT',
-            headers: {
+async function saveGlobalStoreAtomic(updateFunction, maxRetries = 3) {
+    for (let attempt = 0; attempt < maxRetries; attempt++) {
+        try {
+            const { data: currentData, version } = await fetchGlobalStoreWithVersion();
+            
+            // Apply the update function to get new data
+            const newData = updateFunction(currentData);
+            
+            // Prepare headers
+            const headers = {
                 'X-Master-Key': MASTER_KEY,
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(newStore)
-        });
-        globalStore = newStore;
-    } catch (error) {
-        console.error("Error saving global store:", error);
+            };
+            
+            // If version exists, use it for conditional update
+            if (version) {
+                headers['If-Match'] = version;
+            }
+            
+            const response = await fetch(API_URL, {
+                method: 'PUT',
+                headers: headers,
+                body: JSON.stringify(newData)
+            });
+
+            if (response.status === 409) { // Version conflict
+                console.log(`Version conflict, retrying... (${attempt + 1}/${maxRetries})`);
+                continue;
+            }
+
+            if (!response.ok) throw new Error('Failed to save');
+            
+            // Success - update cache
+            globalStore = newData;
+            return newData;
+
+        } catch (error) {
+            console.error("Error in atomic save:", error);
+            if (attempt === maxRetries - 1) throw error;
+        }
     }
+    throw new Error('Max retries exceeded');
 }
 
 // ==================== VISITOR TRACKING ====================
@@ -628,18 +661,39 @@ async function trackNewVisitor() {
     if (!deviceId) {
         const newDeviceId = 'device_' + Date.now() + '_' + Math.random().toString(36).substring(2);
         localStorage.setItem('device_id', newDeviceId);
-        globalStore.deviceTracked[newDeviceId] = true;
-        globalStore.visitors += 1;
-        await saveGlobalStore(globalStore);
-    } else if (!globalStore.deviceTracked[deviceId]) {
-        globalStore.deviceTracked[deviceId] = true;
-        globalStore.visitors += 1;
-        await saveGlobalStore(globalStore);
+        
+        try {
+            await saveGlobalStoreAtomic((currentData) => {
+                if (!currentData.deviceTracked) currentData.deviceTracked = {};
+                currentData.deviceTracked[newDeviceId] = true;
+                currentData.visitors = (currentData.visitors || 0) + 1;
+                return currentData;
+            });
+        } catch (e) {
+            console.warn("Failed to save visitor, but continuing...");
+            // Still update local cache
+            if (!globalStore.deviceTracked) globalStore.deviceTracked = {};
+            globalStore.deviceTracked[newDeviceId] = true;
+            globalStore.visitors = (globalStore.visitors || 0) + 1;
+        }
+    } else {
+        try {
+            await saveGlobalStoreAtomic((currentData) => {
+                if (!currentData.deviceTracked) currentData.deviceTracked = {};
+                if (!currentData.deviceTracked[deviceId]) {
+                    currentData.deviceTracked[deviceId] = true;
+                    currentData.visitors = (currentData.visitors || 0) + 1;
+                }
+                return currentData;
+            });
+        } catch (e) {
+            console.warn("Failed to check visitor, continuing...");
+        }
     }
     return globalStore.visitors;
 }
 
-// ==================== VIDEO STATS (GLOBAL) ====================
+// ==================== VIDEO STATS ====================
 function getVideoStats(videoId) {
     if (!globalStore.videoStats[videoId]) {
         globalStore.videoStats[videoId] = { views: 0, likes: 0, comments: [] };
@@ -648,44 +702,96 @@ function getVideoStats(videoId) {
 }
 
 async function incrementVideoViews(videoId) {
-    const stats = getVideoStats(videoId);
-    stats.views += 1;
-    await saveGlobalStore(globalStore);
-    return stats.views;
+    try {
+        await saveGlobalStoreAtomic((currentData) => {
+            if (!currentData.videoStats[videoId]) {
+                currentData.videoStats[videoId] = { views: 0, likes: 0, comments: [] };
+            }
+            currentData.videoStats[videoId].views += 1;
+            return currentData;
+        });
+    } catch (e) {
+        console.warn("Failed to save view, updating locally only");
+        // Fallback: update local cache
+        if (!globalStore.videoStats[videoId]) {
+            globalStore.videoStats[videoId] = { views: 0, likes: 0, comments: [] };
+        }
+        globalStore.videoStats[videoId].views += 1;
+    }
+    return globalStore.videoStats[videoId].views;
 }
 
 async function incrementVideoLikes(videoId) {
-    const stats = getVideoStats(videoId);
-    stats.likes += 1;
-    await saveGlobalStore(globalStore);
-    return stats.likes;
+    try {
+        await saveGlobalStoreAtomic((currentData) => {
+            if (!currentData.videoStats[videoId]) {
+                currentData.videoStats[videoId] = { views: 0, likes: 0, comments: [] };
+            }
+            currentData.videoStats[videoId].likes += 1;
+            return currentData;
+        });
+    } catch (e) {
+        console.warn("Failed to save like, updating locally only");
+        if (!globalStore.videoStats[videoId]) {
+            globalStore.videoStats[videoId] = { views: 0, likes: 0, comments: [] };
+        }
+        globalStore.videoStats[videoId].likes += 1;
+    }
+    return globalStore.videoStats[videoId].likes;
 }
 
-// ==================== COMMENTS (GLOBAL) ====================
+// ==================== COMMENTS ====================
 function getVideoComments(videoId) {
     return getVideoStats(videoId).comments || [];
 }
 
 async function addVideoComment(videoId, commentText) {
-    const stats = getVideoStats(videoId);
-    if (!stats.comments) stats.comments = [];
+    const deviceId = localStorage.getItem('device_id');
     const newComment = {
         id: 'c_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
         text: commentText,
-        deviceId: localStorage.getItem('device_id')
+        deviceId: deviceId
     };
-    stats.comments.push(newComment);
-    await saveGlobalStore(globalStore);
-    return stats.comments;
+
+    try {
+        await saveGlobalStoreAtomic((currentData) => {
+            if (!currentData.videoStats[videoId]) {
+                currentData.videoStats[videoId] = { views: 0, likes: 0, comments: [] };
+            }
+            if (!currentData.videoStats[videoId].comments) {
+                currentData.videoStats[videoId].comments = [];
+            }
+            currentData.videoStats[videoId].comments.push(newComment);
+            return currentData;
+        });
+    } catch (e) {
+        console.warn("Failed to save comment, updating locally only");
+        if (!globalStore.videoStats[videoId]) {
+            globalStore.videoStats[videoId] = { views: 0, likes: 0, comments: [] };
+        }
+        if (!globalStore.videoStats[videoId].comments) {
+            globalStore.videoStats[videoId].comments = [];
+        }
+        globalStore.videoStats[videoId].comments.push(newComment);
+    }
+    return globalStore.videoStats[videoId].comments;
 }
 
 async function deleteVideoComment(videoId, commentId) {
-    const stats = getVideoStats(videoId);
-    if (stats.comments) {
-        stats.comments = stats.comments.filter(c => c.id !== commentId);
-        await saveGlobalStore(globalStore);
+    try {
+        await saveGlobalStoreAtomic((currentData) => {
+            if (currentData.videoStats[videoId] && currentData.videoStats[videoId].comments) {
+                currentData.videoStats[videoId].comments = currentData.videoStats[videoId].comments.filter(c => c.id !== commentId);
+            }
+            return currentData;
+        });
+    } catch (e) {
+        console.warn("Failed to delete comment, updating locally only");
+        if (globalStore.videoStats[videoId] && globalStore.videoStats[videoId].comments) {
+            globalStore.videoStats[videoId].comments = globalStore.videoStats[videoId].comments.filter(c => c.id !== commentId);
+        }
     }
-    return stats.comments;
+    return globalStore.videoStats[videoId]?.comments || [];
 }
 
 // ==================== TOTAL VIEWS ====================
@@ -706,7 +812,7 @@ function updateStatsUI() {
 
 // ==================== VIDEO DATA ====================
 const videos = [
- 
+
  {
   id: 100,
   title: "सीईओ को पिता का इलाज कराने के लिए गाकर पैसे कमा रही छोटी लड़की से मिला, वह उसकी अपनी जैविक बेटी है!",
@@ -1502,7 +1608,7 @@ const videos = [
  },
 ];
 
-// ==================== RENDER FUNCTION ====================
+// ==================== RENDER FUNCTION (FIXED) ====================
 const feed = document.getElementById("feed");
 const player = document.getElementById("player");
 const videoEl = document.getElementById("video");
@@ -1520,7 +1626,17 @@ function render(list = videos) {
     isRendering = true;
     feed.innerHTML = "";
     loading.classList.add('active');
+    
+    // Clear any pending timeout from previous render
     setTimeout(() => {
+        // Even if no videos, we should remove loading
+        if (!list || list.length === 0) {
+            feed.innerHTML = "<div style='text-align: center; padding: 40px; color: #aaa;'>No videos available</div>";
+            loading.classList.remove('active');
+            isRendering = false;
+            return;
+        }
+        
         list.forEach(v => {
             const stats = getVideoStats(v.id);
             const div = document.createElement("div");
@@ -1538,7 +1654,7 @@ function render(list = videos) {
         });
         loading.classList.remove('active');
         isRendering = false;
-    }, 500);
+    }, 100); // Reduced timeout for faster loading
 }
 
 function updateCardUI(id) {
@@ -1709,12 +1825,19 @@ document.getElementById('rateBtn').addEventListener('click', function(e) {
 document.getElementById('confirmDeleteBtn').addEventListener('click', confirmDelete);
 document.getElementById('cancelDeleteBtn').addEventListener('click', hideDeletePopup);
 
-// ==================== INITIALIZE ====================
+// ==================== FIXED INITIALIZATION ====================
 (async function init() {
-    globalStore = await fetchGlobalStore();
+    try {
+        const { data } = await fetchGlobalStoreWithVersion();
+        globalStore = data;
+    } catch (e) {
+        console.warn("Using default global store");
+        // globalStore already has defaults
+    }
+    
     await trackNewVisitor();
     updateStatsUI();
-    render(videos);
+    render(videos);  // यह लाइन अब हर हाल में चलेगी
 })();
 </script>
 </body>
