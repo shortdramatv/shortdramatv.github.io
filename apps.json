@@ -1,0 +1,46 @@
+{
+  "apps": [
+    {
+      "appName": "Hollywood Hindi Movies",
+      "iconUrl": "https://play-lh.googleusercontent.com/JH4-whKnKHUl-LYSaZedAHZauzQcfcqZLekp_lz9xaAD42mjo_00kPfdlZjnH-w6ykdpBaMymOO0LMcBpwR_n5o=w240-h480-rw",
+      "subtitle": "Download now",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.hollywoodmovieshindidubbed",
+      "createdAt": "2025-01-10T10:00:00.000Z"
+    },
+    {
+      "appName": "South Hindi Movies",
+      "iconUrl": "https://play-lh.googleusercontent.com/27dsuN609VCSllJjdJtoiz3tz98J379pMvyaIR0tTkhQ0LvJi14JmFWW3J3EWzbTdn3ybJ7RkJBjWHm6opEdy64=w240-h480-rw",
+      "subtitle": "Download now",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.southmovieshindidubbed",
+      "createdAt": "2025-01-10T10:00:00.000Z"
+    },
+    {
+      "appName": "FilmyFly - Movies",
+      "iconUrl": "https://play-lh.googleusercontent.com/Qx9C8lp-2tqjs5xHDzFjsSWc3Bw7H82MOhQWJdmYm_barh0Z-S4yRFMTWOtmge9FR9y-RnUb3dSTtBgyUFOSZL8=w240-h480-rw",
+      "subtitle": "Download now",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.filmyflymovies",
+      "createdAt": "2025-01-10T10:00:00.000Z"
+    },
+    {
+      "appName": "Elky - Online Games",
+      "iconUrl": "https://play-lh.googleusercontent.com/nWvaTPmKTYNIQKR4D-YsvuQSHsLlRmbCNfGITr9ENLQaxNFcnJQil4UEebn8-hqmJC65MBykVOX1FxYb8Xqr=w240-h480-rw",
+      "subtitle": "Download now",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.elky",
+      "createdAt": "2025-01-10T10:00:00.000Z"
+    },
+    {
+      "appName": "Horror Games Hub",
+      "iconUrl": "https://play-lh.googleusercontent.com/upz9iP7qKdGHdrLYgtkq6Dkkj4QQ4m2Pc6x1qU8qn2pMOyLIMP1UJfV-ATLN3JaIwu_HaRXdlpiC1HRBaDRgiw=w240-h480-rw",
+      "subtitle": "Download now",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.horrorgames",
+      "createdAt": "2025-01-10T10:00:00.000Z"
+    },
+    {
+      "appName": "DramaTV - Chinese",
+      "iconUrl": "https://play-lh.googleusercontent.com/5k_UGNIUlB2fWasUIc0i6ynUjrjALmbpGwvgFA7ahO5pvQ6DFaaslPA6vUXBxrcyntRC-qqCRMVNbLg9F_yO=w240-h480-rw",
+      "subtitle": "Download now",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv",
+      "createdAt": "2025-01-10T10:00:00.000Z"
+    }
+  ]
+}
