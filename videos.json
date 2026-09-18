@@ -12,6 +12,45 @@
       "language": "Hindi",
       "createdAt": "2026-09-26T21:05:58.000Z",
       "showOnHome": true
+    },
+    {
+      "id": "GG5cS4Xg7ZL6uhEN0IYT",
+      "title": "Kung Fu Kid",
+      "description": "Watch Kung Fu Kid, a fun-filled action movie packed with martial arts, comedy, and exciting fights. Follow the young fighter as he faces challenges and proves his Kung Fu skills. Enjoy the full movie in Hindi.",
+      "videoUrl": "https://www.youtube.com/watch?v=xTOd0y1Mlyw",
+      "thumbnailUrl": "https://img.youtube.com/vi/xTOd0y1Mlyw/maxresdefault.jpg",
+      "category": "Comedy",
+      "categoryIcon": "https://files.softicons.com/download/folder-icons/free-movie-folder-icons-by-design-bolts/png/256x256/Comedy-Movies.png",
+      "movieType": "Chinese",
+      "language": "Hindi",
+      "createdAt": "2026-09-14T17:10:00.000Z",
+      "showOnHome": true
+    },
+    {
+      "id": "UjfstlLpi1CbSHQ2Z8KB",
+      "title": "Crossfire - Hindi Dubbed Full Movie HD | Action Thriller Movie | IOF Hindi",
+      "description": "Crossfire is a gripping action thriller packed with intense battles, dangerous missions, enemy pursuits and unexpected twists. Watch this exciting Hindi Dubbed Hollywood Movie filled with action, suspense and thrilling moments.\n\nIf you enjoy Hollywood Hindi Dubbed Movies, Action Movies, War Movies, Thriller Movies and Full Movies in Hindi, this one is for you.\n\nSubscribe for more Hindi Dubbed Hollywood Movies, Action Movies, Thriller Movies and Adventure Movies.",
+      "videoUrl": "https://www.youtube.com/watch?v=pnBPXVJgw3Q",
+      "thumbnailUrl": "https://img.youtube.com/vi/pnBPXVJgw3Q/maxresdefault.jpg",
+      "category": "Thriller",
+      "categoryIcon": "https://files.softicons.com/download/folder-icons/free-movie-folder-icons-by-design-bolts/png/256x256/Thriller-Movies.png",
+      "movieType": "Japanese",
+      "language": "Hindi",
+      "createdAt": "2026-09-14T17:03:03.000Z",
+      "showOnHome": true
+    },
+    {
+      "id": "WqomiVah0qTMhjz9GdbJ",
+      "title": "KOTTA MADHU",
+      "description": "KOTTA MADHU - Hindi Dubbed Full Movie | Prithviraj Sukumaran, Asif Ali | South Action Thriller Movie\n\nMovie Credits:\nDirected by Shaji Kailas\nWritten by G. R. Indugopan\nBased on Shankhumukhi by G. R. Indugopan\nProduced by Dolwin Kuriakos, Jinu V. Abraham, Dileesh Nair, Vikram Mehra & Siddharth Anand Kumar\nStarring Prithviraj Sukumaran, Asif Ali, Aparna Balamurali, Anna Ben, Dileesh Pothan, Sagar Surya, Indrans, Jagadish, Sreeya Remesh, Nandhu, Sajitha Madathil, Senthil Krishna, Biju Pappan, Jaise Jose, Vijayakumar, Rajamani, Jagdish Kumar & Abhijith U.B.\nCinematography by Jomon T. John\nEdited by Shameer Muhammed\nMusic by Dawn Vincent, Jakes Bejoy & Dawn Vincent\n\nSynopsis:\nThe film explores the dark underbelly of Thiruvananthapuram where rival goondas clash in cold-blooded gang wars to gain dominion over the city's suburbs and slums.",
+      "videoUrl": "https://www.youtube.com/watch?v=X_tDWGsDFvE",
+      "thumbnailUrl": "https://img.youtube.com/vi/X_tDWGsDFvE/maxresdefault.jpg",
+      "category": "Action",
+      "categoryIcon": "https://files.softicons.com/download/folder-icons/free-movie-folder-icons-by-design-bolts/png/256x256/Action-Movies.png",
+      "movieType": "South Indian",
+      "language": "Hindi",
+      "createdAt": "2026-09-14T16:59:04.000Z",
+      "showOnHome": true
     }
   ]
 }
