@@ -22,8 +22,22 @@
       "createdAt": "2025-01-10T10:00:00.000Z"
     },
     {
+      "appName": "DramaTV",
+      "iconUrl": "https://play-lh.googleusercontent.com/5k_UGNIUlB2fWasUIc0i6ynUjrjALmbpGwvgFA7ahO5pvQ6DFaaslPA6vUXBxrcyntRC-qqCRMVNbLg9F_yO=w240-h480-rw",
+      "subtitle": "Download now",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv",
+      "createdAt": "2025-01-10T10:00:00.000Z"
+    },
+     {
+      "appName": "VegaMovies",
+      "iconUrl": "https://play-lh.googleusercontent.com/FmOZfd3Lx70fjJTkUGQhjvnw6v0oKs1qrZz1iCewKn3x6P2JtS8lTNQKjjC5mpDVDeGUIskz8VT-k-ruBiFyfmc=w240-h480-rw",
+      "subtitle": "Download now",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.vegamoviesapp",
+      "createdAt": "2025-01-10T10:00:00.000Z"
+    },
+    {
       "appName": "Elky - Online Games",
-      "iconUrl": "https://play-lh.googleusercontent.com/nWvaTPmKTYNIQKR4D-YsvuQSHsLlRmbCNfGITr9ENLQaxNFcnJQil4UEebn8-hqmJC65MBykVOX1FxYb8Xqr=w240-h480-rw",
+      "iconUrl": "https://play-lh.googleusercontent.com/SwL4fxWgl8IPY_H2sJDbJvmNW1t1KNqfn5XTHdldYu6FPz1zhuzJBsGcDFB5xpzFp-_CcfjwrT8BSXqQquV4=w240-h480-rw",
       "subtitle": "Download now",
       "playStoreUrl": "https://play.google.com/store/apps/details?id=com.elky",
       "createdAt": "2025-01-10T10:00:00.000Z"
@@ -36,10 +50,10 @@
       "createdAt": "2025-01-10T10:00:00.000Z"
     },
     {
-      "appName": "DramaTV - Chinese",
-      "iconUrl": "https://play-lh.googleusercontent.com/5k_UGNIUlB2fWasUIc0i6ynUjrjALmbpGwvgFA7ahO5pvQ6DFaaslPA6vUXBxrcyntRC-qqCRMVNbLg9F_yO=w240-h480-rw",
+      "appName": "Car Games Hub",
+      "iconUrl": "https://play-lh.googleusercontent.com/wLW4vxejf44PvPQ3iunEPXF3-gnEsHCTcato1BvvQrlVA72bfJnPJ5zgKHlSjUJ1KOMWkC0eTj7LCi5ok6O3b6Y=w240-h480-rw",
       "subtitle": "Download now",
-      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.nadeemgs.dramatv",
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=com.cargameshub",
       "createdAt": "2025-01-10T10:00:00.000Z"
     }
   ]
