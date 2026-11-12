@@ -1,6 +1,19 @@
 {
   "videos": [
     {
+      "id": "video_1794504896380",
+      "title": "The Price of Revenge",
+      "description": "The Price of Revenge HINDI Dubbed Full Movie | Extreme Revenge Action Thriller | iofhindi",
+      "videoUrl": "https://www.youtube.com/watch?v=VXUVufbGEcA",
+      "thumbnailUrl": "https://img.youtube.com/vi/LHsVUWgypXk/maxresdefault.jpg",
+      "category": "Thriller",
+      "categoryIcon": "https://files.softicons.com/download/folder-icons/free-movie-folder-icons-by-design-bolts/png/256x256/Thriller-Movies.png",
+      "movieType": "Japanese",
+      "language": "Hindi",
+      "createdAt": "2026-11-12T17:32:03.000Z",
+      "showOnHome": true
+    },
+    {
       "id": "video_1794504723508",
       "title": "Bedevilled",
       "description": "Bedevilled Hindi Dubbed Full Movie | Brutal Revenge Thriller | Revenge & Crime Thriller | ioftamil",
